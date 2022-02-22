@@ -16,6 +16,7 @@ RUN apt-get update \
   procps \
   openssh-client \
   lsb-release \
+  docker.io \
   && git lfs install \
   && rm -rf /var/lib/apt/lists/*
 
@@ -32,6 +33,8 @@ COPY user-settings.json /home/sandbox/.local/share/code-server/User/settings.jso
 COPY config.yaml /home/sandbox/.config/code-server/config.yaml
 
 RUN chown -R sandbox:sandbox /home/sandbox/.local /home/sandbox/.config
+
+RUN usermod -a -G docker sandbox
 
 USER sandbox
 
