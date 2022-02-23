@@ -18,6 +18,9 @@ RUN apt-get update \
   openssh-client \
   lsb-release \
   docker.io \
+  rsync \
+  direnv \
+  ncdu \
   && git lfs install \
   && rm -rf /var/lib/apt/lists/*
 
@@ -35,18 +38,24 @@ COPY keybindings.json /home/sandbox/.local/share/code-server/User/keybindings.js
 
 COPY config.yaml /home/sandbox/.config/code-server/config.yaml
 
-RUN chown -R sandbox:sandbox /home/sandbox/.local /home/sandbox/.config
+RUN chown -R sandbox:sandbox /home/sandbox/.local /home/sandbox/.config /home/sandbox/.local/share/code-server /home/sandbox/.zshrc
 
 RUN usermod -a -G docker sandbox && groupmod -g 999 docker
 
 RUN curl -L https://releases.hashicorp.com/nomad/1.2.3/nomad_1.2.3_linux_amd64.zip > nomad.zip \
  && unzip nomad.zip -d /usr/local/bin \
  && chmod 0755 /usr/local/bin/nomad \
- && chown root:root /usr/local/bin/nomad
+ && chown root:root /usr/local/bin/nomad \
+ && rm -rf nomad.zip
+
+RUN curl -sfLO https://raw.githubusercontent.com/warrensbox/terraform-switcher/release/install.sh \
+  && chmod +x install.sh \
+  && ./install.sh -b /usr/bin \
+  && rm -rf install.sh
 
 USER sandbox
 
-ENV items "golang.go hashicorp.terraform ms-python.python zhuangtongfa.Material-theme"
+ENV items "golang.go hashicorp.terraform ms-python.python redhat.vscode-yaml eamodio.gitlens pkief.material-icon-theme zhuangtongfa.Material-theme"
 RUN for item in $items; do \
   /usr/local/code-server/bin/code-server --force --install-extension $item; \
   done;

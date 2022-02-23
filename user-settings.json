@@ -1,6 +1,6 @@
 {
   "workbench.colorTheme": "One Dark Pro",
-  "workbench.iconTheme": "vscode-icons",
+  "workbench.iconTheme": "material-icon-theme",
   "workbench.startupEditor": "newUntitledFile",
   "editor.renderWhitespace": "all",
   "editor.formatOnSave": true,
@@ -13,5 +13,7 @@
   "files.watcherExclude": {
     "**/vendor/**": true,
     "**/.config/**": true
-  }
+  },
+  "gitlens.mode.statusBar.enabled": false,
+  "gitlens.hovers.currentLine.over": "line"
 }
