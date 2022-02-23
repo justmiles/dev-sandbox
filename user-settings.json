@@ -1,3 +1,17 @@
 {
-  "workbench.colorTheme": "Monokai Dimmed"
+  "workbench.colorTheme": "One Dark Pro",
+  "workbench.iconTheme": "vscode-icons",
+  "workbench.startupEditor": "newUntitledFile",
+  "editor.renderWhitespace": "all",
+  "editor.formatOnSave": true,
+  "editor.fontSize": 12,
+  "editor.tabSize": 2,
+  "extensions.ignoreRecommendations": true,
+  "extensions.autoCheckUpdates": false,
+  "explorer.confirmDelete": false,
+  "extensions.autoUpdate": false,
+  "files.watcherExclude": {
+    "**/vendor/**": true,
+    "**/.config/**": true
+  }
 }
