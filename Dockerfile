@@ -2,7 +2,9 @@ FROM justmiles/docker-shell-sandbox
 
 ENV BUILD_DATE=20220206
 ENV VERSION=4.0.2
-ENV CODE_RELEASE=v4.0.2
+
+# https://github.com/coder/code-server/releases
+ENV CODE_SERVER_RELEASE=4.1.0
 USER root
 
 RUN apt-get update \
@@ -31,7 +33,7 @@ RUN sed -i "s/# en_US.UTF-8/en_US.UTF-8/" /etc/locale.gen \
 ENV LANG=en_US.UTF-8
 
 RUN mkdir -p /usr/local/code-server \
-  && curl -sfLo - https://github.com/coder/code-server/releases/download/v4.0.2/code-server-4.0.2-linux-amd64.tar.gz | tar -xzvf - -C /usr/local/code-server --strip-components=1
+  && curl -sfLo - https://github.com/coder/code-server/releases/download/v${CODE_SERVER_RELEASE}/code-server-${CODE_SERVER_RELEASE}-linux-amd64.tar.gz | tar -xzvf - -C /usr/local/code-server --strip-components=1
 
 COPY user-settings.json /home/sandbox/.local/share/code-server/User/settings.json
 COPY keybindings.json /home/sandbox/.local/share/code-server/User/keybindings.json

@@ -15,5 +15,11 @@
     "**/.config/**": true
   },
   "gitlens.mode.statusBar.enabled": false,
-  "gitlens.hovers.currentLine.over": "line"
+  "gitlens.hovers.currentLine.over": "line",
+  "files.associations": {
+    "*.hcl": "terraform",
+    "*.nomad": "terraform"
+  },
+  "explorer.confirmDragAndDrop": false,
+  "redhat.telemetry.enabled": false
 }
