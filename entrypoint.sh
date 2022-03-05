@@ -12,4 +12,4 @@ function _entrypoint_hooks() {
 
 [ ! -z ENTRYPOINT_HOOKS ] && _entrypoint_hooks $ENTRYPOINT_HOOKS
 
-dumb-init /usr/local/code-server/bin/code-server
+dumb-init /usr/local/code-server/bin/code-server "$@"

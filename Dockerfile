@@ -102,6 +102,7 @@ RUN apt-get update \
   rsync \
   direnv \
   ncdu \
+  python3-pip \
   && git lfs install \
   && rm -rf /var/lib/apt/lists/*
 
@@ -133,6 +134,9 @@ RUN curl -sfLO https://raw.githubusercontent.com/warrensbox/terraform-switcher/r
   && chmod +x install.sh \
   && ./install.sh -b /usr/bin \
   && rm -rf install.sh
+
+# Configure python
+RUN sudo ln -s /usr/bin/python3 /usr/bin/python
 
 USER sandbox
 
