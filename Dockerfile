@@ -140,7 +140,7 @@ RUN sudo ln -s /usr/bin/python3 /usr/bin/python
 
 USER sandbox
 
-ENV items "golang.go hashicorp.terraform ms-python.python redhat.vscode-yaml eamodio.gitlens esbenp.prettier-vscode tabnine.tabnine-vscode daylerees.rainglow GrapeCity.gc-excelviewer pkief.material-icon-theme zhuangtongfa.Material-theme"
+ENV items "golang.go hashicorp.terraform ms-python.python redhat.vscode-yaml eamodio.gitlens esbenp.prettier-vscode tabnine.tabnine-vscode GrapeCity.gc-excelviewer pkief.material-icon-theme zhuangtongfa.Material-theme"
 RUN for item in $items; do \
   /usr/local/code-server/bin/code-server --force --install-extension $item; \
   done;
