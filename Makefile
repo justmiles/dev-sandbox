@@ -7,3 +7,6 @@ push: build
 
 run:
 	docker run --rm -d --name dev-sandbox -v $$PWD:/home/sandbox/workspaces -p 8080:8080 justmiles/dev-sandbox
+
+run-shell:
+	docker run --rm -it --name dev-sandbox -v $$PWD:/home/sandbox/workspaces --entrypoint zsh justmiles/dev-sandbox

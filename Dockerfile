@@ -5,12 +5,54 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Install Apt Packages
 RUN apt-get update \
-  && apt-get install -y apt-file netcat net-tools dnsutils curl wget vim zsh less sudo g++ git unzip busybox iputils-ping traceroute nmap \
+  && apt-get install -y \
+    busybox \
+    curl \
+    direnv \
+    dnsutils \
+    docker.io \
+    dumb-init \
+    g++ \
+    git \
+    git-lfs \
+    htop \
+    iputils-ping \
+    less \
+    locales \
+    lsb-release \
+    make \
+    man \
+    ncdu \
+    netcat \
+    net-tools \
+    nmap \
+    openssh-client \
+    procps \
+    python3-pip \
+    rsync \
+    sudo \
+    traceroute \
+    unzip \
+    vim \
+    wget \
+    zsh \
   && apt-get clean autoclean \
   && apt-get autoremove --yes \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
-# Install AWS CLI
+# Configure Docker
+RUN groupmod -g 999 docker
+
+# https://wiki.debian.org/Locale#Manually
+RUN sed -i "s/# en_US.UTF-8/en_US.UTF-8/" /etc/locale.gen \
+  && locale-gen
+
+ENV LANG=en_US.UTF-8
+
+# Setup python
+RUN sudo ln -s /usr/bin/python3 /usr/bin/python
+
+# Install https://github.com/aws/aws-cli
 RUN apt-get install -y awscli
 
 # Install https://github.com/stedolan/jq
@@ -42,38 +84,52 @@ RUN curl -sfLo - https://github.com/mithrandie/csvq/releases/download/v1.15.2/cs
 # Install https://github.com/pemistahl/grex
 RUN curl -sfLo - https://github.com/pemistahl/grex/releases/download/v1.3.0/grex-v1.3.0-x86_64-unknown-linux-musl.tar.gz | tar -xzvf - -C /usr/local/bin grex
 
-# Install gron
+# Install https://github.com/tomnomnom/gron
 RUN curl -sfLo - https://github.com/tomnomnom/gron/releases/download/v0.6.1/gron-linux-amd64-0.6.1.tgz | tar -xzvf - -C /usr/local/bin
 
-# Install whois
+# Install https://github.com/likexian/whois
 RUN curl -sfLo -  https://github.com/likexian/whois/releases/download/v1.12.1/whois-linux-amd64.zip | busybox unzip -qd /usr/local/bin/ - \
   && chmod +x /usr/local/bin/whois
 
-# Install restic
+# Install https://github.com/restic/restic
 RUN curl -sfLo - https://github.com/restic/restic/releases/download/v0.12.1/restic_0.12.1_linux_amd64.bz2 | bzip2 -d -qc > /usr/local/bin/restic \
   && chmod +x /usr/local/bin/restic
 
 # Install golang
-ENV GOLANG_VERSION="1.16"
-RUN curl -sLO https://dl.google.com/go/go${GOLANG_VERSION}.linux-amd64.tar.gz \
-  && tar -xzvf go${GOLANG_VERSION}.linux-amd64.tar.gz -C /usr/local \
-  && echo 'export PATH=$PATH:/usr/local/go/bin:/root/go/bin' > /etc/profile.d/go.sh \
-  && rm -rf go*.tar.gz
+RUN curl -sLo - https://dl.google.com/go/go1.16.linux-amd64.tar.gz | tar -xzvf - -C /usr/local \
+  && echo 'export PATH=$PATH:/usr/local/go/bin:/root/go/bin' > /etc/profile.d/go.sh
 
-# Install kpwgen
+# Install https://github.com/lpar/kpwgen
 RUN /usr/local/go/bin/go get github.com/lpar/kpwgen
 
-# Install textql
+# Install https://github.com/dinedal/textql
 RUN /usr/local/go/bin/go get -u github.com/dinedal/textql/...
 
-# Install rclone
+# Install https://github.com/rclone/rclone
 RUN curl -sfO https://downloads.rclone.org/rclone-current-linux-amd64.deb \
   && sudo dpkg -i rclone-current-linux-amd64.deb \
   && rm -rf rclone-current-linux-amd64.deb
 
+# Install Nomad
+RUN curl -sfLo - https://releases.hashicorp.com/nomad/1.2.3/nomad_1.2.3_linux_amd64.zip | busybox unzip -qd /usr/local/bin - \
+ && chmod +x /usr/local/bin/nomad
+
+# Install https://github.com/warrensbox/terraform-switcher
+RUN curl -sfLo - https://raw.githubusercontent.com/warrensbox/terraform-switcher/release/install.sh | bash /dev/stdin -b /usr/bin
+
+# Install https://github.com/coder/code-server
+RUN mkdir -p /usr/local/code-server \
+  && curl -sfLo - https://github.com/coder/code-server/releases/download/v${CODE_SERVER_RELEASE}/code-server-${CODE_SERVER_RELEASE}-linux-amd64.tar.gz | tar -xzvf - -C /usr/local/code-server --strip-components=1
+
 # Setup sandbox user
 RUN useradd --shell /usr/bin/zsh --create-home sandbox \
-  && echo 'sandbox ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/sandbox
+  && echo 'sandbox ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/sandbox \
+  && usermod -a -G docker sandbox
+
+# Copy user configs
+COPY --chown=sandbox:sandbox user-settings.json /home/sandbox/.local/share/code-server/User/settings.json
+COPY --chown=sandbox:sandbox keybindings.json /home/sandbox/.local/share/code-server/User/keybindings.json
+COPY --chown=sandbox:sandbox config.yaml /home/sandbox/.config/code-server/config.yaml
 
 USER sandbox
 
@@ -82,68 +138,27 @@ WORKDIR /home/sandbox
 # Install ohmyzsh
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 
-COPY .zshrc .
+COPY --chown=sandbox:sandbox .zshrc .
 
-USER root
+# Install NVM
+ENV NVM_DIR="/home/sandbox/.nvm"
+RUN curl -sfLo- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | zsh \
+ && . $NVM_DIR/nvm.sh \
+ && nvm install --lts
 
-RUN apt-get update \
-  && apt-get install -y \
-  dumb-init \
-  htop \
-  locales \
-  man \
-  git \
-  make \
-  git-lfs \
-  procps \
-  openssh-client \
-  lsb-release \
-  docker.io \
-  rsync \
-  direnv \
-  ncdu \
-  python3-pip \
-  && git lfs install \
-  && rm -rf /var/lib/apt/lists/*
-
-# https://wiki.debian.org/Locale#Manually
-RUN sed -i "s/# en_US.UTF-8/en_US.UTF-8/" /etc/locale.gen \
-  && locale-gen
-
-ENV LANG=en_US.UTF-8
-
-RUN mkdir -p /usr/local/code-server \
-  && curl -sfLo - https://github.com/coder/code-server/releases/download/v${CODE_SERVER_RELEASE}/code-server-${CODE_SERVER_RELEASE}-linux-amd64.tar.gz | tar -xzvf - -C /usr/local/code-server --strip-components=1
-
-COPY user-settings.json /home/sandbox/.local/share/code-server/User/settings.json
-COPY keybindings.json /home/sandbox/.local/share/code-server/User/keybindings.json
-
-COPY config.yaml /home/sandbox/.config/code-server/config.yaml
-
-RUN chown -R sandbox:sandbox /home/sandbox/.local /home/sandbox/.config /home/sandbox/.local/share/code-server /home/sandbox/.zshrc
-
-RUN usermod -a -G docker sandbox && groupmod -g 999 docker
-
-RUN curl -L https://releases.hashicorp.com/nomad/1.2.3/nomad_1.2.3_linux_amd64.zip > nomad.zip \
- && unzip nomad.zip -d /usr/local/bin \
- && chmod 0755 /usr/local/bin/nomad \
- && chown root:root /usr/local/bin/nomad \
- && rm -rf nomad.zip
-
-RUN curl -sfLO https://raw.githubusercontent.com/warrensbox/terraform-switcher/release/install.sh \
-  && chmod +x install.sh \
-  && ./install.sh -b /usr/bin \
-  && rm -rf install.sh
-
-# Configure python
-RUN sudo ln -s /usr/bin/python3 /usr/bin/python
-
-USER sandbox
-
-ENV items "golang.go hashicorp.terraform ms-python.python redhat.vscode-yaml eamodio.gitlens esbenp.prettier-vscode tabnine.tabnine-vscode GrapeCity.gc-excelviewer pkief.material-icon-theme zhuangtongfa.Material-theme"
-RUN for item in $items; do \
-  /usr/local/code-server/bin/code-server --force --install-extension $item; \
-  done;
+# Install VS Code Extensions
+RUN for item in \
+      golang.go \
+      hashicorp.terraform \
+      ms-python.python \
+      redhat.vscode-yaml \
+      eamodio.gitlens \
+      esbenp.prettier-vscode \
+      # tabnine.tabnine-vscode \ # disabling until code-server fixes iframes
+      GrapeCity.gc-excelviewer \
+      pkief.material-icon-theme \
+      zhuangtongfa.Material-theme \
+    ; do /usr/local/code-server/bin/code-server --force --install-extension $item; done
 
 EXPOSE 8080
 
