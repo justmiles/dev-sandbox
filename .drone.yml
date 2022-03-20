@@ -2,8 +2,10 @@ kind: pipeline
 name: default
 
 steps:
-- name: docker  
+- name: docker
   image: plugins/docker
+  environment:
+    DOCKER_API_VERSION: ${DOCKER_API_VERSION}
   settings:
     username: justmiles
     password: 
