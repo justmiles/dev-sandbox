@@ -1,17 +1,13 @@
----
 kind: pipeline
 name: default
 
 steps:
-- name: test
-  image: docker:dind
-  volumes:
-  - name: dockersock
-    path: /var/run/docker.sock
-  commands:
-  - docker build . -t justmiles/dev-sandbox
-
-volumes:
-- name: dockersock
-  host:
-    path: /var/run/docker.sock
+- name: docker  
+  image: plugins/docker
+  settings:
+    username: justmiles
+    password: 
+      from_secret: DOCKER_TOKENgit 
+    repo: justmiles/dev-sandbox
+    tags: latest
+    squash: true
