@@ -117,6 +117,9 @@ RUN curl -sfLo - https://releases.hashicorp.com/nomad/1.2.3/nomad_1.2.3_linux_am
 # Install https://github.com/warrensbox/terraform-switcher
 RUN curl -sfLo - https://raw.githubusercontent.com/warrensbox/terraform-switcher/release/install.sh | bash /dev/stdin -b /usr/bin
 
+# Install  https://github.com/harness/drone-cli
+RUN curl -sfLo - https://github.com/harness/drone-cli/releases/latest/download/drone_linux_amd64.tar.gz | tar -xzvf - -C /usr/local/bin
+
 # Install https://github.com/coder/code-server
 RUN mkdir -p /usr/local/code-server \
   && curl -sfLo - https://github.com/coder/code-server/releases/download/v${CODE_SERVER_RELEASE}/code-server-${CODE_SERVER_RELEASE}-linux-amd64.tar.gz | tar -xzvf - -C /usr/local/code-server --strip-components=1
