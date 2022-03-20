@@ -5,7 +5,7 @@ steps:
 - name: docker
   image: plugins/docker
   environment:
-    DOCKER_API_VERSION: ${DOCKER_API_VERSION}
+    DOCKER_API_VERSION: 1.37
   settings:
     username: justmiles
     password: 
