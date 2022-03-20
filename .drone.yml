@@ -7,7 +7,9 @@ steps:
   settings:
     username: justmiles
     password: 
-      from_secret: DOCKER_TOKENgit 
+      from_secret: DOCKER_TOKEN
     repo: justmiles/dev-sandbox
     tags: latest
     squash: true
+    cache_from:
+      - "justmiles/dev-sandbox:latest"
