@@ -1,17 +1,17 @@
+---
 kind: pipeline
 name: default
 
 steps:
-- name: docker
-  image: plugins/docker
-  environment:
-    DOCKER_API_VERSION: 1.37
-  settings:
-    username: justmiles
-    password: 
-      from_secret: DOCKER_TOKEN
-    repo: justmiles/dev-sandbox
-    tags: latest
-    squash: true
-    cache_from:
-      - "justmiles/dev-sandbox:latest"
+- name: test
+  image: docker:dind
+  volumes:
+  - name: dockersock
+    path: /var/run/docker.sock
+  commands:
+  - docker build . -t justmiles/dev-sandbox
+
+volumes:
+- name: dockersock
+  host:
+    path: /var/run/docker.sock
