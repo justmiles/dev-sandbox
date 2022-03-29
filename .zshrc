@@ -16,6 +16,9 @@ plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
+source /etc/profile.d/go.sh
+export GOPATH=/home/sandbox/go
+
 # Hook direnv
 eval "$(direnv hook zsh)"
 

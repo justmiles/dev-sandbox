@@ -120,6 +120,14 @@ RUN curl -sfLo - https://raw.githubusercontent.com/warrensbox/terraform-switcher
 # Install  https://github.com/harness/drone-cli
 RUN curl -sfLo - https://github.com/harness/drone-cli/releases/latest/download/drone_linux_amd64.tar.gz | tar -xzvf - -C /usr/local/bin
 
+# Install Java
+RUN apt-get update \
+    && apt-get install -y openjdk-8-jdk openjdk-11-jdk openjdk-17-jdk ant maven \
+    && apt-get install -y ant maven gradle \
+    && apt-get clean autoclean \
+    && apt-get autoremove --yes \
+    && rm -rf /var/lib/{apt,dpkg,cache,log}/
+
 # Install https://github.com/coder/code-server
 RUN mkdir -p /usr/local/code-server \
   && curl -sfLo - https://github.com/coder/code-server/releases/download/v${CODE_SERVER_RELEASE}/code-server-${CODE_SERVER_RELEASE}-linux-amd64.tar.gz | tar -xzvf - -C /usr/local/code-server --strip-components=1
@@ -131,6 +139,7 @@ RUN useradd --shell /usr/bin/zsh --create-home sandbox \
 
 # Copy user configs
 COPY --chown=sandbox:sandbox user-settings.json /home/sandbox/.local/share/code-server/User/settings.json
+COPY --chown=sandbox:sandbox machine-settings.json /home/sandbox/.local/share/code-server/Machine/settings.json
 COPY --chown=sandbox:sandbox keybindings.json /home/sandbox/.local/share/code-server/User/keybindings.json
 COPY --chown=sandbox:sandbox config.yaml /home/sandbox/.config/code-server/config.yaml
 
@@ -156,6 +165,7 @@ RUN for item in \
       ms-python.python \
       redhat.vscode-yaml \
       eamodio.gitlens \
+      redhat.java \
       esbenp.prettier-vscode \
       # tabnine.tabnine-vscode \ # disabling until code-server fixes iframes
       GrapeCity.gc-excelviewer \
