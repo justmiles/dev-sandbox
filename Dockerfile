@@ -159,18 +159,33 @@ RUN curl -sfLo- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh 
  && nvm install --lts
 
 # Install VS Code Extensions
+# TODO: Figure out how to support the tabnine.tabnine-vscode extension
 RUN for item in \
+
+      # Golang
       golang.go \
+
+      # Terrafomr
       hashicorp.terraform \
+
+      # Python
       ms-python.python \
-      redhat.vscode-yaml \
-      eamodio.gitlens \
+      
+      # Java
       redhat.java \
+      gabrielbb.vscode-lombok \
+
+      # Generic language parsers / prettifiers
       esbenp.prettier-vscode \
-      # tabnine.tabnine-vscode \ # disabling until code-server fixes iframes
-      GrapeCity.gc-excelviewer \
+      redhat.vscode-yaml \
+
+      # Generic tools
+      eamodio.gitlens \
+
+      # Install snazzy themes
       pkief.material-icon-theme \
       zhuangtongfa.Material-theme \
+
     ; do /usr/local/code-server/bin/code-server --force --install-extension $item; done
 
 EXPOSE 8080
