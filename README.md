@@ -1,3 +1,5 @@
+[![Build Status](https://drone.justmiles.io/api/badges/justmiles/dev-sandbox/status.svg)](https://drone.justmiles.io/justmiles/dev-sandbox)
+
 # justmiles dev sandbox
 
 This repo contains common tools and plugins I use when developing remotely.
