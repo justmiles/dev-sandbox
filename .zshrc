@@ -19,6 +19,8 @@ source $ZSH/oh-my-zsh.sh
 source /etc/profile.d/go.sh
 export GOPATH=/home/sandbox/go
 
+export PATH=$PATH:/home/sandbox/bin
+
 # Hook direnv
 eval "$(direnv hook zsh)"
 
