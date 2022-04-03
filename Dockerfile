@@ -96,7 +96,7 @@ RUN curl -sfLo - https://github.com/restic/restic/releases/download/v0.12.1/rest
   && chmod +x /usr/local/bin/restic
 
 # Install golang
-RUN curl -sLo - https://dl.google.com/go/go1.16.linux-amd64.tar.gz | tar -xzvf - -C /usr/local \
+RUN curl -sLo - https://go.dev/dl/go1.17.6.linux-amd64.tar.gz | tar -xzvf - -C /usr/local \
   && echo 'export PATH=$PATH:/usr/local/go/bin:/root/go/bin' > /etc/profile.d/go.sh
 
 # Install https://github.com/lpar/kpwgen
@@ -161,31 +161,23 @@ RUN curl -sfLo- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh 
 # Install VS Code Extensions
 # TODO: Figure out how to support the tabnine.tabnine-vscode extension
 RUN for item in \
-
       # Golang
       golang.go \
-
       # Terrafomr
       hashicorp.terraform \
-
       # Python
       ms-python.python \
-      
       # Java
       redhat.java \
       gabrielbb.vscode-lombok \
-
       # Generic language parsers / prettifiers
       esbenp.prettier-vscode \
       redhat.vscode-yaml \
-
       # Generic tools
       eamodio.gitlens \
-
       # Install snazzy themes
       pkief.material-icon-theme \
       zhuangtongfa.Material-theme \
-
     ; do /usr/local/code-server/bin/code-server --force --install-extension $item; done
 
 EXPOSE 8080
