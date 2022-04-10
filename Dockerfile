@@ -97,13 +97,16 @@ RUN curl -sfLo - https://github.com/restic/restic/releases/download/v0.12.1/rest
 
 # Install golang
 RUN curl -sLo - https://go.dev/dl/go1.17.6.linux-amd64.tar.gz | tar -xzvf - -C /usr/local \
-  && echo 'export PATH=$PATH:/usr/local/go/bin:/root/go/bin' > /etc/profile.d/go.sh
+  && echo 'export PATH=$PATH:/usr/local/go/bin:/root/go/bin:$HOME/go/bin' > /etc/profile.d/go.sh
 
 # Install https://github.com/lpar/kpwgen
-RUN /usr/local/go/bin/go get github.com/lpar/kpwgen
+RUN GOBIN=/usr/local/bin/ /usr/local/go/bin/go install github.com/lpar/kpwgen@latest
 
 # Install https://github.com/dinedal/textql
-RUN /usr/local/go/bin/go get -u github.com/dinedal/textql/...
+RUN GOBIN=/usr/local/bin/ /usr/local/go/bin/go install github.com/dinedal/textql/...@latest
+
+# Install hclfmt
+RUN GOBIN=/usr/local/bin/ /usr/local/go/bin/go install github.com/hashicorp/hcl/v2/cmd/hclfmt@latest
 
 # Install https://github.com/rclone/rclone
 RUN curl -sfO https://downloads.rclone.org/rclone-current-linux-amd64.deb \
@@ -173,6 +176,7 @@ RUN for item in \
       # Generic language parsers / prettifiers
       esbenp.prettier-vscode \
       redhat.vscode-yaml \
+      jkillian.custom-local-formatters \
       # Generic tools
       eamodio.gitlens \
       # Install snazzy themes

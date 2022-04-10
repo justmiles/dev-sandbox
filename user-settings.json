@@ -16,10 +16,22 @@
   },
   "gitlens.mode.statusBar.enabled": false,
   "gitlens.hovers.currentLine.over": "line",
+  "explorer.confirmDragAndDrop": false,
+  "redhat.telemetry.enabled": false,
+  "telemetry.telemetryLevel": "off",
+  "customLocalFormatters.formatters": [
+    {
+      "command": "/usr/local/bin/hclfmt",
+      "languages": [
+        "terraform"
+      ]
+    }
+  ],
   "files.associations": {
     "*.hcl": "terraform",
     "*.nomad": "terraform"
   },
-  "explorer.confirmDragAndDrop": false,
-  "redhat.telemetry.enabled": false
+  "[terraform]": {
+    "editor.defaultFormatter": "jkillian.custom-local-formatters"
+  }
 }
