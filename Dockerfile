@@ -53,7 +53,10 @@ ENV LANG=en_US.UTF-8
 RUN sudo ln -s /usr/bin/python3 /usr/bin/python
 
 # Install https://github.com/aws/aws-cli
-RUN apt-get install -y awscli
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" \
+  && unzip awscliv2.zip \
+  && sudo ./aws/install --update \
+  && rm -rf aws awscliv2.zip
 
 # Install https://github.com/stedolan/jq
 RUN curl -sfLo /usr/local/bin/jq https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 \
@@ -107,6 +110,15 @@ RUN GOBIN=/usr/local/bin/ /usr/local/go/bin/go install github.com/dinedal/textql
 
 # Install hclfmt
 RUN GOBIN=/usr/local/bin/ /usr/local/go/bin/go install github.com/hashicorp/hcl/v2/cmd/hclfmt@latest
+
+# Install gopls
+RUN GOBIN=/usr/local/bin/ go install -v golang.org/x/tools/gopls@latest
+
+# Install golangci-lint
+RUN GOBIN=/usr/local/bin/ go install -v github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+
+# install dlv
+RUN GOBIN=/usr/local/bin/ go install -v github.com/go-delve/delve/cmd/dlv@latest
 
 # Install https://github.com/rclone/rclone
 RUN curl -sfO https://downloads.rclone.org/rclone-current-linux-amd64.deb \

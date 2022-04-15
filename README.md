@@ -9,7 +9,7 @@ This repo contains common tools and plugins I use when developing remotely.
 Quickstart:
 
 ```bash
-docker run -p 8080:8080 -v $PWD:/home/sandbox/workspaces justmiles/dev-sandbox:latest
+docker run --security-opt="apparmor=unconfined" --cap-add=SYS_PTRACE -p 8080:8080 -v $PWD:/home/sandbox/workspaces justmiles/dev-sandbox:latest
 ```
 
 When running as a service, consider mapping the following volumes for a generally better experience:

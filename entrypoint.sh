@@ -2,7 +2,7 @@
 
 # load custom entrypoints
 function _entrypoint_hooks() {
-  for f in $(ls $1/*.sh); do
+  for f in $(ls $1/*.sh 2>/dev/null); do
     source $f
     if [ "$?" -gt "0" ]; then
       echo "Problem loading $f" && exit 1
@@ -10,6 +10,7 @@ function _entrypoint_hooks() {
   done
 }
 
+# Load entrypoint hooks, if exists
 [ ! -z ENTRYPOINT_HOOKS ] && _entrypoint_hooks $ENTRYPOINT_HOOKS
 
 dumb-init /usr/local/code-server/bin/code-server "$@"
