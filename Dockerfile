@@ -1,4 +1,4 @@
-FROM ubuntu:bionic
+FROM ubuntu:focal
 
 ENV CODE_SERVER_RELEASE=4.2.0
 ENV DEBIAN_FRONTEND=noninteractive
@@ -112,13 +112,13 @@ RUN GOBIN=/usr/local/bin/ /usr/local/go/bin/go install github.com/dinedal/textql
 RUN GOBIN=/usr/local/bin/ /usr/local/go/bin/go install github.com/hashicorp/hcl/v2/cmd/hclfmt@latest
 
 # Install gopls
-RUN GOBIN=/usr/local/bin/ go install -v golang.org/x/tools/gopls@latest
+RUN GOBIN=/usr/local/bin/ /usr/local/go/bin/go install -v golang.org/x/tools/gopls@latest
 
 # Install golangci-lint
-RUN GOBIN=/usr/local/bin/ go install -v github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+RUN GOBIN=/usr/local/bin/ /usr/local/go/bin/go install -v github.com/golangci/golangci-lint/cmd/golangci-lint@latest
 
 # install dlv
-RUN GOBIN=/usr/local/bin/ go install -v github.com/go-delve/delve/cmd/dlv@latest
+RUN GOBIN=/usr/local/bin/ /usr/local/go/bin/go install -v github.com/go-delve/delve/cmd/dlv@latest
 
 # Install https://github.com/rclone/rclone
 RUN curl -sfO https://downloads.rclone.org/rclone-current-linux-amd64.deb \
