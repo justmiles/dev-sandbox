@@ -117,8 +117,11 @@ RUN GOBIN=/usr/local/bin/ /usr/local/go/bin/go install -v golang.org/x/tools/gop
 # Install golangci-lint
 RUN GOBIN=/usr/local/bin/ /usr/local/go/bin/go install -v github.com/golangci/golangci-lint/cmd/golangci-lint@latest
 
-# install dlv
+# Install dlv
 RUN GOBIN=/usr/local/bin/ /usr/local/go/bin/go install -v github.com/go-delve/delve/cmd/dlv@latest
+
+# Install github.com/abice/go-enum
+RUN GOBIN=/usr/local/bin/ /usr/local/go/bin/go install -v github.com/abice/go-enum@latest
 
 # Install https://github.com/rclone/rclone
 RUN curl -sfO https://downloads.rclone.org/rclone-current-linux-amd64.deb \
