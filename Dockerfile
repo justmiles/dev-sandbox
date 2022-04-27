@@ -91,8 +91,12 @@ RUN curl -sfLo - https://github.com/pemistahl/grex/releases/download/v1.3.0/grex
 RUN curl -sfLo - https://github.com/tomnomnom/gron/releases/download/v0.6.1/gron-linux-amd64-0.6.1.tgz | tar -xzvf - -C /usr/local/bin
 
 # Install https://github.com/likexian/whois
-RUN curl -sfLo -  https://github.com/likexian/whois/releases/download/v1.12.1/whois-linux-amd64.zip | busybox unzip -qd /usr/local/bin/ - \
+RUN curl -sfLo - https://github.com/likexian/whois/releases/download/v1.12.1/whois-linux-amd64.zip | busybox unzip -qd /usr/local/bin/ - \
   && chmod +x /usr/local/bin/whois
+
+# Install https://github.com/mikefarah/yq
+RUN curl -sfLo /usr/local/bin/yq https://github.com/mikefarah/yq/releases/download/v4.24.5/yq_linux_amd64 \
+  && chmod +x /usr/local/bin/yq
 
 # Install https://github.com/restic/restic
 RUN curl -sfLo - https://github.com/restic/restic/releases/download/v0.12.1/restic_0.12.1_linux_amd64.bz2 | bzip2 -d -qc > /usr/local/bin/restic \
