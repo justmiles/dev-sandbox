@@ -115,6 +115,9 @@ RUN GOBIN=/usr/local/bin/ /usr/local/go/bin/go install github.com/dinedal/textql
 # Install hclfmt
 RUN GOBIN=/usr/local/bin/ /usr/local/go/bin/go install github.com/hashicorp/hcl/v2/cmd/hclfmt@latest
 
+# Install git bump
+RUN GOBIN=/usr/local/bin/ /usr/local/go/bin/go install -v github.com/justmiles/git-bump@latest
+
 # Install gopls
 RUN GOBIN=/usr/local/bin/ /usr/local/go/bin/go install -v golang.org/x/tools/gopls@latest
 
