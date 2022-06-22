@@ -104,7 +104,7 @@ RUN curl -sfLo - https://github.com/restic/restic/releases/download/v0.12.1/rest
   && chmod +x /usr/local/bin/restic
 
 # Install golang
-RUN curl -sLo - https://go.dev/dl/go1.17.6.linux-amd64.tar.gz | tar -xzvf - -C /usr/local \
+RUN curl -sLo - https://go.dev/dl/go1.18.3.linux-amd64.tar.gz | tar -xzvf - -C /usr/local \
   && echo 'export PATH=$PATH:/usr/local/go/bin:/root/go/bin:$HOME/go/bin' > /etc/profile.d/go.sh
 
 # Install https://github.com/lpar/kpwgen
@@ -123,7 +123,7 @@ RUN GOBIN=/usr/local/bin/ /usr/local/go/bin/go install -v github.com/justmiles/g
 RUN GOBIN=/usr/local/bin/ /usr/local/go/bin/go install -v golang.org/x/tools/gopls@latest
 
 # Install golangci-lint
-RUN GOBIN=/usr/local/bin/ /usr/local/go/bin/go install -v github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+RUN GOBIN=/usr/local/bin/ /usr/local/go/bin/go install -v github.com/golangci/golangci-lint/cmd/golangci-lint@v1.46.1
 
 # Install dlv
 RUN GOBIN=/usr/local/bin/ /usr/local/go/bin/go install -v github.com/go-delve/delve/cmd/dlv@latest
