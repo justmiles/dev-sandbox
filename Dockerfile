@@ -205,6 +205,7 @@ RUN for item in \
       jkillian.custom-local-formatters \
       # Generic tools
       eamodio.gitlens \
+      jebbs.plantuml \
       # Install snazzy themes
       pkief.material-icon-theme \
       zhuangtongfa.Material-theme \

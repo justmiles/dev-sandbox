@@ -13,5 +13,7 @@
       "path": "/usr/lib/jvm/java-17-openjdk-amd64",
       "default": true
     }
-  ]
+  ],
+  "plantuml.render": "PlantUMLServer",
+  "plantuml.server": "https://plantuml.justmiles.io"
 }
