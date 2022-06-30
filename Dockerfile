@@ -11,7 +11,6 @@ RUN apt-get update \
     direnv \
     dnsutils \
     docker.io \
-    dumb-init \
     g++ \
     git \
     git-lfs \
@@ -32,6 +31,7 @@ RUN apt-get update \
     rsync \
     sudo \
     traceroute \
+    tree \
     unzip \
     vim \
     wget \
@@ -47,7 +47,15 @@ RUN groupmod -g 999 docker
 RUN sed -i "s/# en_US.UTF-8/en_US.UTF-8/" /etc/locale.gen \
   && locale-gen
 
-ENV LANG=en_US.UTF-8
+# Install s6-overlay
+RUN curl -sfLo - https://github.com/just-containers/s6-overlay/releases/download/v3.1.0.1/s6-overlay-noarch.tar.xz | tar -Jxpf - -C /
+RUN curl -sfLo - https://github.com/just-containers/s6-overlay/releases/download/v3.1.0.1/s6-overlay-x86_64.tar.xz | tar -Jxpf - -C /
+
+# Install tailscale
+RUN curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/focal.gpg | sudo apt-key add - \
+     && curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/focal.list | sudo tee /etc/apt/sources.list.d/tailscale.list \
+     && apt-get update \
+     && apt-get install -y tailscale
 
 # Setup python
 RUN sudo ln -s /usr/bin/python3 /usr/bin/python \
@@ -213,8 +221,10 @@ RUN for item in \
 
 EXPOSE 8080
 
-COPY entrypoint.sh /usr/bin/entrypoint
-
 WORKDIR /home/sandbox
 
-ENTRYPOINT ["entrypoint"]
+USER root
+
+COPY s6-overlay /etc/s6-overlay
+
+ENTRYPOINT ["/init"]

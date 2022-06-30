@@ -1,0 +1,5 @@
+#!/bin/sh
+
+exec 2>&1
+
+exec s6-setuidgid sandbox /usr/local/code-server/bin/code-server
