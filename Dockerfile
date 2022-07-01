@@ -1,6 +1,6 @@
 FROM ubuntu:focal
 
-ENV CODE_SERVER_RELEASE=4.2.0
+ENV CODE_SERVER_RELEASE=4.4.0
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Install Apt Packages
