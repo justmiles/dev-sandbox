@@ -76,28 +76,28 @@ RUN curl -sfLo /usr/local/bin/get-ssm-params https://github.com/justmiles/go-get
   && chmod +x /usr/local/bin/get-ssm-params
 
 # Install https://github.com/justmiles/ssm-parameter-store
-RUN curl -sfLo - https://github.com/justmiles/ssm-parameter-store/releases/download/v0.0.6/ssm-parameter-store_0.0.6_Linux_x86_64.tar.gz | tar -xzvf - -C /usr/local/bin ssm-parameter-store
+RUN curl -sfLo - https://github.com/justmiles/ssm-parameter-store/releases/download/v0.0.6/ssm-parameter-store_0.0.6_Linux_x86_64.tar.gz | tar -xzf - -C /usr/local/bin ssm-parameter-store
 
 # Install https://github.com/justmiles/ecs-deploy
-RUN curl -sfLo - https://github.com/justmiles/ecs-deploy/releases/download/v0.2.5/ecs-deploy_0.2.5_Linux_arm64.tar.gz | tar -xzvf - -C /usr/local/bin ecs-deploy
+RUN curl -sfLo - https://github.com/justmiles/ecs-deploy/releases/download/v0.2.5/ecs-deploy_0.2.5_Linux_arm64.tar.gz | tar -xzf - -C /usr/local/bin ecs-deploy
 
 # Install https://github.com/justmiles/athena-cli
-RUN curl -sfLo - https://github.com/justmiles/athena-cli/releases/download/v0.1.8/athena-cli_0.1.8_linux_x86_64.tar.gz | tar -xzvf - -C /usr/local/bin athena
+RUN curl -sfLo - https://github.com/justmiles/athena-cli/releases/download/v0.1.8/athena-cli_0.1.8_linux_x86_64.tar.gz | tar -xzf - -C /usr/local/bin athena
 
 # Install https://github.com/justmiles/ecs-cli
-RUN curl -sfLo - https://github.com/justmiles/ecs-cli/releases/download/v0.0.20/ecs_0.0.20_Linux_x86_64.tar.gz | tar -xzvf - -C /usr/local/bin ecs
+RUN curl -sfLo - https://github.com/justmiles/ecs-cli/releases/download/v0.0.20/ecs_0.0.20_Linux_x86_64.tar.gz | tar -xzf - -C /usr/local/bin ecs
 
 # Install https://github.com/justmiles/jumpcloud-cli
-RUN curl -sfLo - https://github.com/justmiles/jumpcloud-cli/releases/download/v0.0.2/jumpcloud-cli_0.0.2_Linux_x86_64.tar.gz | tar -xzvf - -C /usr/local/bin jc
+RUN curl -sfLo - https://github.com/justmiles/jumpcloud-cli/releases/download/v0.0.2/jumpcloud-cli_0.0.2_Linux_x86_64.tar.gz | tar -xzf - -C /usr/local/bin jc
 
 # Install https://github.com/mithrandie/csvq
-RUN curl -sfLo - https://github.com/mithrandie/csvq/releases/download/v1.15.2/csvq-v1.15.2-linux-amd64.tar.gz | tar -xzvf - -C /usr/local/bin --strip-components=1 csvq-v1.15.2-linux-amd64/csvq
+RUN curl -sfLo - https://github.com/mithrandie/csvq/releases/download/v1.15.2/csvq-v1.15.2-linux-amd64.tar.gz | tar -xzf - -C /usr/local/bin --strip-components=1 csvq-v1.15.2-linux-amd64/csvq
 
 # Install https://github.com/pemistahl/grex
-RUN curl -sfLo - https://github.com/pemistahl/grex/releases/download/v1.3.0/grex-v1.3.0-x86_64-unknown-linux-musl.tar.gz | tar -xzvf - -C /usr/local/bin grex
+RUN curl -sfLo - https://github.com/pemistahl/grex/releases/download/v1.3.0/grex-v1.3.0-x86_64-unknown-linux-musl.tar.gz | tar -xzf - -C /usr/local/bin grex
 
 # Install https://github.com/tomnomnom/gron
-RUN curl -sfLo - https://github.com/tomnomnom/gron/releases/download/v0.6.1/gron-linux-amd64-0.6.1.tgz | tar -xzvf - -C /usr/local/bin
+RUN curl -sfLo - https://github.com/tomnomnom/gron/releases/download/v0.6.1/gron-linux-amd64-0.6.1.tgz | tar -xzf - -C /usr/local/bin
 
 # Install https://github.com/likexian/whois
 RUN curl -sfLo - https://github.com/likexian/whois/releases/download/v1.12.1/whois-linux-amd64.zip | busybox unzip -qd /usr/local/bin/ - \
@@ -112,7 +112,7 @@ RUN curl -sfLo - https://github.com/restic/restic/releases/download/v0.12.1/rest
   && chmod +x /usr/local/bin/restic
 
 # Install golang
-RUN curl -sLo - https://go.dev/dl/go1.18.3.linux-amd64.tar.gz | tar -xzvf - -C /usr/local \
+RUN curl -sLo - https://go.dev/dl/go1.18.3.linux-amd64.tar.gz | tar -xzf - -C /usr/local \
   && echo 'export PATH=$PATH:/usr/local/go/bin:/root/go/bin:$HOME/go/bin' > /etc/profile.d/go.sh
 
 # Install https://github.com/lpar/kpwgen
@@ -155,7 +155,7 @@ RUN curl -sfLo - https://releases.hashicorp.com/nomad/1.2.3/nomad_1.2.3_linux_am
 RUN curl -sfLo - https://raw.githubusercontent.com/warrensbox/terraform-switcher/release/install.sh | bash /dev/stdin -b /usr/bin
 
 # Install  https://github.com/harness/drone-cli
-RUN curl -sfLo - https://github.com/harness/drone-cli/releases/latest/download/drone_linux_amd64.tar.gz | tar -xzvf - -C /usr/local/bin
+RUN curl -sfLo - https://github.com/harness/drone-cli/releases/latest/download/drone_linux_amd64.tar.gz | tar -xzf - -C /usr/local/bin
 
 # Install Java
 RUN apt-get update \
@@ -167,18 +167,15 @@ RUN apt-get update \
 
 # Install https://github.com/coder/code-server
 RUN mkdir -p /usr/local/code-server \
-  && curl -sfLo - https://github.com/coder/code-server/releases/download/v${CODE_SERVER_RELEASE}/code-server-${CODE_SERVER_RELEASE}-linux-amd64.tar.gz | tar -xzvf - -C /usr/local/code-server --strip-components=1
+  && curl -sfLo - https://github.com/coder/code-server/releases/download/v${CODE_SERVER_RELEASE}/code-server-${CODE_SERVER_RELEASE}-linux-amd64.tar.gz | tar -xzf - -C /usr/local/code-server --strip-components=1
 
 # Setup sandbox user
 RUN useradd --shell /usr/bin/zsh --create-home sandbox \
   && echo 'sandbox ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/sandbox \
   && usermod -a -G docker sandbox
 
-# Copy user configs
-COPY --chown=sandbox:sandbox user-settings.json /home/sandbox/.local/share/code-server/User/settings.json
-COPY --chown=sandbox:sandbox machine-settings.json /home/sandbox/.local/share/code-server/Machine/settings.json
-COPY --chown=sandbox:sandbox keybindings.json /home/sandbox/.local/share/code-server/User/keybindings.json
-COPY --chown=sandbox:sandbox config.yaml /home/sandbox/.config/code-server/config.yaml
+# Copy user dotfiles
+COPY --chown=sandbox:sandbox dotfiles /home/sandbox
 
 USER sandbox
 
@@ -186,8 +183,6 @@ WORKDIR /home/sandbox
 
 # Install ohmyzsh
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
-
-COPY --chown=sandbox:sandbox .zshrc .
 
 # Install NVM
 ENV NVM_DIR="/home/sandbox/.nvm"
@@ -225,6 +220,10 @@ WORKDIR /home/sandbox
 
 USER root
 
-COPY s6-overlay /etc/s6-overlay
+# Copy s6-overlay configs
+COPY s6-rc.d /etc/s6-overlay/s6-rc.d
+
+# Set default environment variables
+ENV S6_VERBOSITY 1
 
 ENTRYPOINT ["/init"]

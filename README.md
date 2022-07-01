@@ -11,9 +11,9 @@ Quickstart:
 ```bash
 docker run --privileged \
   -e TS_AUTH_KEY \
-  -e TS_EXTRA_ARGS \
   -e TS_HOSTNAME \
-  -v /dev/net/tun:/dev/net/tun \
+  -e ENTRYPOINT_HOOKS=/home/sandbox/workspaces/hooks \
+  -e TS_STATE=/home/sandbox/workspaces/.tailscaled.state \
   -v /var/run/docker.sock:/var/run/docker.sock \
   -p 8080:8080 \
   -v $PWD:/home/sandbox/workspaces \
@@ -23,21 +23,26 @@ docker run --privileged \
 
 ## Volumes
 
-When running as a service, consider mapping the following volumes for a generally better experience:
+Consider mapping the following volumes for a generally better experience.
 
-- /home/sandbox/.ssh - SSH auth
-- /home/sandbox/workspaces - persistent workspaces
-- /var/run/docker.sock - access to the docker daemon
-- /dev/net/tun - TUN/TAP for Tailscale & OpenVPN
+| Name                     | Description                     |
+| ------------------------ | ------------------------------- |
+| /home/sandbox/.ssh       | pass in your SSH credentials    |
+| /home/sandbox/workspaces | working directory for IDE       |
+| /var/run/docker.sock     | access to the docker daemon     |
+| /dev/net/tun             | TUN/TAP for Tailscale & OpenVPN |
 
 ## Environment Variables
 
-| Name          | Description                                        |
-| ------------- | -------------------------------------------------- |
-| TS_AUTH_KEY   | Tailscale authentication key                       |
-| TS_HOSTNAME   | Tailscale hostname for this machine                |
-| TS_EXTRA_ARGS | Additional arguments to the `tailscale up` command |
-| HISTFILE      | path to your persistant history file               |
+| Name             | Description                                                                 |
+| ---------------- | --------------------------------------------------------------------------- |
+| TS_AUTH_KEY      | tailscale authentication key                                                |
+| TS_HOSTNAME      | tailscale hostname for this machine                                         |
+| TS_EXTRA_ARGS    | additional arguments to the `tailscale up` command                          |
+| TS_STATE         | absolute path of tailscale state file                                       |
+| HISTFILE         | path to your persistant history file                                        |
+| S6_VERBOSITY     | controls the verbosity of s6-rc                                             |
+| ENTRYPOINT_HOOKS | path to directory of executables to be invoked before launching code-server |
 
 ## Daemons
 
@@ -45,6 +50,6 @@ This project uses an s6-overlay to manage backend daemons.
 
 | Name          | Description                              |
 | ------------- | ---------------------------------------- |
-| code-server   | The main IDE                             |
-| tailscald     | Tailscale daemon for mesh VPN            |
-| TODO: OpenVPN | Client VPN to access privileged networks |
+| code-server   | the main IDE                             |
+| tailscald     | tailscale daemon for mesh VPN            |
+| TODO: openvpn | client VPN to access privileged networks |

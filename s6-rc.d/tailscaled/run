@@ -1,0 +1,7 @@
+#!/command/with-contenv sh
+
+[ ! -z "${TS_STATE_DIR}" ]      && ARGS="--statedir=${TS_STATE_DIR} ${ARGS}"
+[ ! -z "${TS_STATE}" ]          && ARGS="--state=${TS_STATE} ${ARGS}"
+[ ! -z "${TS_USERSPACE}" ]      && ARGS="--tun=userspace-networking ${ARGS}"
+
+tailscaled --socket=/tmp/tailscaled.sock --tun=userspace-networking ${ARGS}
