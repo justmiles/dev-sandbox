@@ -227,3 +227,5 @@ COPY s6-rc.d /etc/s6-overlay/s6-rc.d
 ENV S6_VERBOSITY 1
 
 ENTRYPOINT ["/init"]
+
+CMD ["/etc/s6-overlay/s6-rc.d/code-server/run"]

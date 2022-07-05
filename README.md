@@ -34,15 +34,15 @@ Consider mapping the following volumes for a generally better experience.
 
 ## Environment Variables
 
-| Name             | Description                                                                 |
-| ---------------- | --------------------------------------------------------------------------- |
-| TS_AUTH_KEY      | tailscale authentication key                                                |
-| TS_HOSTNAME      | tailscale hostname for this machine                                         |
-| TS_EXTRA_ARGS    | additional arguments to the `tailscale up` command                          |
-| TS_STATE         | absolute path of tailscale state file                                       |
-| HISTFILE         | path to your persistant history file                                        |
-| S6_VERBOSITY     | controls the verbosity of s6-rc                                             |
-| ENTRYPOINT_HOOKS | path to directory of executables to be invoked before launching code-server |
+| Name             | Description                                                                                           |
+| ---------------- | ----------------------------------------------------------------------------------------------------- |
+| TS_AUTH_KEY      | tailscale authentication key                                                                          |
+| TS_HOSTNAME      | tailscale hostname for this machine                                                                   |
+| TS_EXTRA_ARGS    | additional arguments to the `tailscale up` command                                                    |
+| TS_STATE         | absolute path of tailscale state file                                                                 |
+| HISTFILE         | path to your persistant history file                                                                  |
+| S6\_\*           | [s6-rc configuration options](https://github.com/just-containers/s6-overlay#customizing-s6-behaviour) |
+| ENTRYPOINT_HOOKS | path to directory of executables to be invoked before launching code-server                           |
 
 ## Daemons
 
