@@ -4,20 +4,18 @@
 
 This repo contains common tools and plugins I use when developing remotely.
 
-## Usage
+## Quickstart
 
-Quickstart:
+Run a basic sandbox with the following
 
 ```bash
-docker run --privileged \
-  -e TS_AUTH_KEY \
-  -e TS_HOSTNAME \
-  -v /var/run/docker.sock:/var/run/docker.sock \
+docker run \
   -p 8080:8080 \
   -v $PWD:/home/sandbox/workspaces \
-  -v $PWD/tailscaled:/var/lib/tailscaled \
   justmiles/dev-sandbox:latest
 ```
+
+###
 
 Use [Tailscale HTTPS](https://tailscale.com/kb/1153/enabling-https/)
 
@@ -49,7 +47,7 @@ Consider mapping the following volumes for a generally better experience.
 | ---------------- | ----------------------------------------------------------------------------------------------------- | ------------------- |
 | TS_SSL_ENABLED   | (required for TLS) serve code-server over HTTPS using tailscale certificates                          | false               |
 | TS_DOMAIN_ALIAS  | (required for TLS) [tailscale domain alias](https://login.tailscale.com/admin/settings/features)      |                     |
-| TS_AUTH_KEY      | tailscale authentication key                                                                          |                     |
+| TS_AUTH_KEY      | tailscale authentication key. Enables tailscale                                                       |                     |
 | TS_HOSTNAME      | tailscale hostname for this machine                                                                   |                     |
 | TS_EXTRA_ARGS    | additional arguments to the `tailscale up` command                                                    |                     |
 | TS_STATE_DIR     | absolute path of tailscale state file                                                                 | /var/lib/tailscaled |
