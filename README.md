@@ -47,6 +47,8 @@ All environment variables are optional.
 
 | Name             | Description                                                                                           | Default             |
 | ---------------- | ----------------------------------------------------------------------------------------------------- | ------------------- |
+| SANDBOX_UID      | set the sandbox user's user ID                                                                        | 1000                |
+| SANDBOX_GID      | set the sandbox user's group ID                                                                       | 1000                |
 | TS_AUTH_KEY      | tailscale authentication key. Enables tailscale                                                       |                     |
 | TS_HOSTNAME      | tailscale hostname for this machine                                                                   |                     |
 | TS_STATE_DIR     | absolute path of tailscale state file                                                                 | /var/lib/tailscaled |

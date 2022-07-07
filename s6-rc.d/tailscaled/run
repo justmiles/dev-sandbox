@@ -2,6 +2,7 @@
 
 [ ! -z "${TS_STATE_DIR}" ]      && ARGS="--statedir=${TS_STATE_DIR} ${ARGS}"
 [ ! -z "${TS_STATE}" ]          && ARGS="--state=${TS_STATE} ${ARGS}"
-[ "${TS_USERSPACE}" = "true" ]  && UP_ARGS="--tun=userspace-networking ${ARGS}"
+[ "${TS_USERSPACE}" = "true" ]  && ARGS="--tun=userspace-networking ${ARGS}"
 
+set -x
 tailscaled ${ARGS}
