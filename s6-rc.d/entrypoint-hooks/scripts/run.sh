@@ -1,5 +1,7 @@
 #!/command/with-contenv bash
 
+export HOME=/home/sandbox
+
 # Load entrypoint hooks, if set
 [ ! -z "${ENTRYPOINT_HOOKS}" ] && find $ENTRYPOINT_HOOKS -type f -executable | while read f; do
   echo "ENTRYPOINT_HOOKS: $f: running"

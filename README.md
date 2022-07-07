@@ -43,24 +43,18 @@ Consider mapping the following volumes for a generally better experience.
 
 ## Environment Variables
 
+All environment variables are optional.
+
 | Name             | Description                                                                                           | Default             |
 | ---------------- | ----------------------------------------------------------------------------------------------------- | ------------------- |
-| TS_SSL_ENABLED   | (required for TLS) serve code-server over HTTPS using tailscale certificates                          | false               |
-| TS_DOMAIN_ALIAS  | (required for TLS) [tailscale domain alias](https://login.tailscale.com/admin/settings/features)      |                     |
 | TS_AUTH_KEY      | tailscale authentication key. Enables tailscale                                                       |                     |
 | TS_HOSTNAME      | tailscale hostname for this machine                                                                   |                     |
-| TS_EXTRA_ARGS    | additional arguments to the `tailscale up` command                                                    |                     |
 | TS_STATE_DIR     | absolute path of tailscale state file                                                                 | /var/lib/tailscaled |
+| TS_ROUTES        | additional network routes for tailscale                                                               |                     |
+| TS_USERSPACE     | true / false - whether or not to run tailscale in userspace                                           | true                |
+| TS_EXTRA_ARGS    | additional arguments to the `tailscale up` command                                                    |                     |
+| TS_SSL_ENABLED   | (required for TLS) serve code-server over HTTPS using tailscale certificates                          | false               |
+| TS_DOMAIN_ALIAS  | (required for TLS) [tailscale domain alias](https://login.tailscale.com/admin/settings/features)      |                     |
 | HISTFILE         | path to your persistant history file                                                                  |                     |
 | S6\_\*           | [s6-rc configuration options](https://github.com/just-containers/s6-overlay#customizing-s6-behaviour) |                     |
 | ENTRYPOINT_HOOKS | path to directory of executables to be invoked before launching code-server                           |                     |
-
-## Daemons
-
-This project uses an s6-overlay to manage backend daemons.
-
-| Name          | Description                              |
-| ------------- | ---------------------------------------- |
-| code-server   | the main IDE                             |
-| tailscald     | tailscale daemon for mesh VPN            |
-| TODO: openvpn | client VPN to access privileged networks |

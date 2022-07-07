@@ -225,7 +225,9 @@ COPY s6-rc.d /etc/s6-overlay/s6-rc.d
 
 # Set default environment variables
 ENV S6_VERBOSITY 1
+ENV TS_HOSTNAME dev-sandbox
 ENV TS_STATE_DIR /var/lib/tailscaled
+ENV TS_USERSPACE true
 ENV TS_ENABLED false
 ENV S6_CMD_WAIT_FOR_SERVICES_MAXTIME 0
 

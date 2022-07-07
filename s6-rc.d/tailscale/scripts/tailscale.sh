@@ -3,8 +3,9 @@
 # only start tailscale if it's enabled
 [ -z "${TS_AUTH_KEY}" ] && exit 0
 
-[ ! -z "${TS_AUTH_KEY}" ]   && UP_ARGS="--authkey=${TS_AUTH_KEY} ${UP_ARGS}"
-[ ! -z "${TS_HOSTNAME}" ]   && UP_ARGS="--hostname=${TS_HOSTNAME} ${UP_ARGS}"
-[ ! -z "${TS_EXTRA_ARGS}" ] && UP_ARGS="${UP_ARGS} ${TS_EXTRA_ARGS}"
+[ ! -z "${TS_AUTH_KEY}" ]       && ARGS="--authkey=${TS_AUTH_KEY} ${ARGS}"
+[ ! -z "${TS_HOSTNAME}" ]       && ARGS="--hostname=${TS_HOSTNAME} ${ARGS}"
+[ ! -z "${TS_ROUTES}" ]         && ARGS="--advertise-routes=${TS_ROUTES} ${ARGS}"
+[ ! -z "${TS_EXTRA_ARGS}" ]     && ARGS="${TS_EXTRA_ARGS} ${ARGS}"
 
-tailscale up ${UP_ARGS}
+tailscale up ${ARGS}
