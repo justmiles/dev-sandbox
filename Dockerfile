@@ -99,6 +99,9 @@ RUN curl -sfLo - https://github.com/pemistahl/grex/releases/download/v1.3.0/grex
 # Install https://github.com/tomnomnom/gron
 RUN curl -sfLo - https://github.com/tomnomnom/gron/releases/download/v0.6.1/gron-linux-amd64-0.6.1.tgz | tar -xzf - -C /usr/local/bin
 
+# Install https://github.com/watchexec/watchexec
+RUN curl -sfLo - https://github.com/watchexec/watchexec/releases/download/cli-v1.20.4/watchexec-1.20.4-x86_64-unknown-linux-gnu.tar.xz | tar -xJf - -C /usr/local/bin --strip-components=1 watchexec-1.20.4-x86_64-unknown-linux-gnu/watchexec
+
 # Install https://github.com/likexian/whois
 RUN curl -sfLo - https://github.com/likexian/whois/releases/download/v1.12.1/whois-linux-amd64.zip | busybox unzip -qd /usr/local/bin/ - \
   && chmod +x /usr/local/bin/whois
@@ -138,6 +141,9 @@ RUN GOBIN=/usr/local/bin/ /usr/local/go/bin/go install -v github.com/go-delve/de
 
 # Install github.com/abice/go-enum
 RUN GOBIN=/usr/local/bin/ /usr/local/go/bin/go install -v github.com/abice/go-enum@latest
+
+# Install github.com/m3ng9i/ran
+RUN GOBIN=/usr/local/bin/ /usr/local/go/bin/go install -v github.com/m3ng9i/ran@latest
 
 # Install https://github.com/rclone/rclone
 RUN curl -sfO https://downloads.rclone.org/rclone-current-linux-amd64.deb \
@@ -228,6 +234,7 @@ ENV S6_VERBOSITY 1
 ENV TS_HOSTNAME dev-sandbox
 ENV TS_STATE_DIR /var/lib/tailscaled
 ENV TS_USERSPACE true
+ENV TS_ACCEPT_ROUTES true
 ENV TS_ENABLED false
 ENV S6_CMD_WAIT_FOR_SERVICES_MAXTIME 0
 
