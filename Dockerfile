@@ -128,22 +128,22 @@ RUN GOBIN=/usr/local/bin/ /usr/local/go/bin/go install github.com/dinedal/textql
 RUN GOBIN=/usr/local/bin/ /usr/local/go/bin/go install github.com/hashicorp/hcl/v2/cmd/hclfmt@latest
 
 # Install git bump
-RUN GOBIN=/usr/local/bin/ /usr/local/go/bin/go install -v github.com/justmiles/git-bump@latest
+RUN GOBIN=/usr/local/bin/ /usr/local/go/bin/go install github.com/justmiles/git-bump@latest
 
 # Install gopls
-RUN GOBIN=/usr/local/bin/ /usr/local/go/bin/go install -v golang.org/x/tools/gopls@latest
+RUN GOBIN=/usr/local/bin/ /usr/local/go/bin/go install golang.org/x/tools/gopls@latest
 
 # Install golangci-lint
-RUN GOBIN=/usr/local/bin/ /usr/local/go/bin/go install -v github.com/golangci/golangci-lint/cmd/golangci-lint@v1.46.1
+RUN GOBIN=/usr/local/bin/ /usr/local/go/bin/go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.46.1
 
 # Install dlv
-RUN GOBIN=/usr/local/bin/ /usr/local/go/bin/go install -v github.com/go-delve/delve/cmd/dlv@latest
+RUN GOBIN=/usr/local/bin/ /usr/local/go/bin/go install github.com/go-delve/delve/cmd/dlv@latest
 
 # Install github.com/abice/go-enum
-RUN GOBIN=/usr/local/bin/ /usr/local/go/bin/go install -v github.com/abice/go-enum@latest
+RUN GOBIN=/usr/local/bin/ /usr/local/go/bin/go install github.com/abice/go-enum@latest
 
 # Install github.com/m3ng9i/ran
-RUN GOBIN=/usr/local/bin/ /usr/local/go/bin/go install -v github.com/m3ng9i/ran@latest
+RUN GOBIN=/usr/local/bin/ /usr/local/go/bin/go install github.com/m3ng9i/ran@latest
 
 # Install https://github.com/rclone/rclone
 RUN curl -sfO https://downloads.rclone.org/rclone-current-linux-amd64.deb \
