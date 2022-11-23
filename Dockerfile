@@ -72,50 +72,50 @@ RUN curl -sfLo /usr/local/bin/jq https://github.com/stedolan/jq/releases/downloa
   && chmod +x /usr/local/bin/jq
 
 # Install https://github.com/justmiles/go-get-ssm-params
-RUN curl -sfLo /usr/local/bin/get-ssm-params https://github.com/justmiles/go-get-ssm-params/releases/download/v1.7.0/get-ssm-params.v1.7.0.linux-amd64 \
+RUN curl -sfLo - https://github.com/justmiles/go-get-ssm-params/releases/download/v1.8.0/get-ssm-params_1.8.0_Linux_x86_64.tar.gz | tar -xzf - -C /usr/local/bin get-ssm-params \
   && chmod +x /usr/local/bin/get-ssm-params
 
 # Install https://github.com/justmiles/ssm-parameter-store
-RUN curl -sfLo - https://github.com/justmiles/ssm-parameter-store/releases/download/v0.0.6/ssm-parameter-store_0.0.6_Linux_x86_64.tar.gz | tar -xzf - -C /usr/local/bin ssm-parameter-store
+RUN curl -sfLo - https://github.com/justmiles/ssm-parameter-store/releases/download/v0.0.7/ssm-parameter-store_0.0.7_Linux_x86_64.tar.gz | tar -xzf - -C /usr/local/bin ssm-parameter-store
 
 # Install https://github.com/justmiles/ecs-deploy
-RUN curl -sfLo - https://github.com/justmiles/ecs-deploy/releases/download/v0.2.5/ecs-deploy_0.2.5_Linux_arm64.tar.gz | tar -xzf - -C /usr/local/bin ecs-deploy
+RUN curl -sfLo - https://github.com/justmiles/ecs-deploy/releases/download/v0.5.0/ecs-deploy_0.5.0_Linux_arm64.tar.gz | tar -xzf - -C /usr/local/bin ecs-deploy
 
 # Install https://github.com/justmiles/athena-cli
-RUN curl -sfLo - https://github.com/justmiles/athena-cli/releases/download/v0.1.8/athena-cli_0.1.8_linux_x86_64.tar.gz | tar -xzf - -C /usr/local/bin athena
+RUN curl -sfLo - https://github.com/justmiles/athena-cli/releases/download/v0.1.10/athena-cli_0.1.10_linux_x86_64.tar.gz | tar -xzf - -C /usr/local/bin athena
 
 # Install https://github.com/justmiles/ecs-cli
-RUN curl -sfLo - https://github.com/justmiles/ecs-cli/releases/download/v0.0.20/ecs_0.0.20_Linux_x86_64.tar.gz | tar -xzf - -C /usr/local/bin ecs
+RUN curl -sfLo - https://github.com/justmiles/ecs-cli/releases/download/v0.3.2/ecs_0.3.2_Linux_x86_64.tar.gz | tar -xzf - -C /usr/local/bin ecs
 
 # Install https://github.com/justmiles/jumpcloud-cli
 RUN curl -sfLo - https://github.com/justmiles/jumpcloud-cli/releases/download/v0.0.2/jumpcloud-cli_0.0.2_Linux_x86_64.tar.gz | tar -xzf - -C /usr/local/bin jc
 
 # Install https://github.com/mithrandie/csvq
-RUN curl -sfLo - https://github.com/mithrandie/csvq/releases/download/v1.15.2/csvq-v1.15.2-linux-amd64.tar.gz | tar -xzf - -C /usr/local/bin --strip-components=1 csvq-v1.15.2-linux-amd64/csvq
+RUN curl -sfLo - https://github.com/mithrandie/csvq/releases/download/v1.17.11/csvq-v1.17.11-linux-amd64.tar.gz | tar -xzf - -C /usr/local/bin --strip-components=1 csvq-v1.17.11-linux-amd64/csvq
 
 # Install https://github.com/pemistahl/grex
-RUN curl -sfLo - https://github.com/pemistahl/grex/releases/download/v1.3.0/grex-v1.3.0-x86_64-unknown-linux-musl.tar.gz | tar -xzf - -C /usr/local/bin grex
+RUN curl -sfLo - https://github.com/pemistahl/grex/releases/download/v1.4.1/grex-v1.4.1-x86_64-unknown-linux-musl.tar.gz | tar -xzf - -C /usr/local/bin grex
 
 # Install https://github.com/tomnomnom/gron
-RUN curl -sfLo - https://github.com/tomnomnom/gron/releases/download/v0.6.1/gron-linux-amd64-0.6.1.tgz | tar -xzf - -C /usr/local/bin
+RUN curl -sfLo - https://github.com/tomnomnom/gron/releases/download/v0.7.1/gron-linux-amd64-0.7.1.tgz | tar -xzf - -C /usr/local/bin
 
 # Install https://github.com/watchexec/watchexec
-RUN curl -sfLo - https://github.com/watchexec/watchexec/releases/download/cli-v1.20.4/watchexec-1.20.4-x86_64-unknown-linux-gnu.tar.xz | tar -xJf - -C /usr/local/bin --strip-components=1 watchexec-1.20.4-x86_64-unknown-linux-gnu/watchexec
+RUN curl -sfLo - https://github.com/watchexec/watchexec/releases/download/v1.20.6/watchexec-1.20.6-x86_64-unknown-linux-gnu.tar.xz | tar -xJf - -C /usr/local/bin --strip-components=1 --wildcards '*/watchexec'
 
 # Install https://github.com/likexian/whois
-RUN curl -sfLo - https://github.com/likexian/whois/releases/download/v1.12.1/whois-linux-amd64.zip | busybox unzip -qd /usr/local/bin/ - \
+RUN curl -sfLo - https://github.com/likexian/whois/releases/download/v1.14.4/whois-linux-amd64.tar.gz| tar -xvzf - -C /usr/local/bin --strip-components=1 whois \
   && chmod +x /usr/local/bin/whois
 
 # Install https://github.com/mikefarah/yq
-RUN curl -sfLo /usr/local/bin/yq https://github.com/mikefarah/yq/releases/download/v4.24.5/yq_linux_amd64 \
+RUN curl -sfLo /usr/local/bin/yq https://github.com/mikefarah/yq/releases/download/v4.30.4/yq_linux_amd64 \
   && chmod +x /usr/local/bin/yq
 
 # Install https://github.com/restic/restic
-RUN curl -sfLo - https://github.com/restic/restic/releases/download/v0.12.1/restic_0.12.1_linux_amd64.bz2 | bzip2 -d -qc > /usr/local/bin/restic \
+RUN curl -sfLo - https://github.com/restic/restic/releases/download/v0.14.0/restic_0.14.0_linux_amd64.bz2 | bzip2 -d -qc > /usr/local/bin/restic \
   && chmod +x /usr/local/bin/restic
 
 # Install golang
-RUN curl -sLo - https://go.dev/dl/go1.18.3.linux-amd64.tar.gz | tar -xzf - -C /usr/local \
+RUN curl -sLo - https://go.dev/dl/go1.19.3.linux-amd64.tar.gz | tar -xzf - -C /usr/local \
   && echo 'export PATH=$PATH:/usr/local/go/bin:/root/go/bin:$HOME/go/bin' > /etc/profile.d/go.sh
 
 # Install https://github.com/lpar/kpwgen
@@ -229,6 +229,9 @@ USER root
 # Copy s6-overlay configs
 COPY s6-rc.d /etc/s6-overlay/s6-rc.d
 
+# Copy code-server
+COPY code-server.sh /usr/local/bin/code-server.sh
+
 # Set default environment variables
 ENV S6_VERBOSITY 1
 ENV TS_HOSTNAME dev-sandbox
@@ -240,4 +243,4 @@ ENV S6_CMD_WAIT_FOR_SERVICES_MAXTIME 0
 
 ENTRYPOINT ["/init"]
 
-CMD ["/etc/s6-overlay/s6-rc.d/code-server/run"]
+CMD ["/usr/local/bin/code-server.sh"]

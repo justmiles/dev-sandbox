@@ -1,4 +1,4 @@
-#!/command/with-contenv sh
+#!/usr/bin/env sh
 set -e
 
 exec 2>&1
