@@ -21,15 +21,20 @@
   "telemetry.telemetryLevel": "off",
   "customLocalFormatters.formatters": [
     {
-      "command": "/usr/local/bin/hclfmt",
+      "command": "~/bin/terraform fmt -",
       "languages": [
         "terraform"
       ]
-    }
+    },
+    {
+      "command": "~/.local/bin/nomad fmt -",
+      "languages": [
+          "nomad"
+      ]
+  }
   ],
   "files.associations": {
-    "*.hcl": "terraform",
-    "*.nomad": "terraform"
+    "*.hcl": "terraform"
   },
   "[terraform]": {
     "editor.defaultFormatter": "jkillian.custom-local-formatters"

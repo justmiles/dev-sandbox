@@ -1,8 +1,13 @@
 #!/command/with-contenv sh
 
+# only start tailscale if it's enabled
+if [ -z "${TS_AUTH_KEY}" ]; then
+  sleep 300 # not currently a way to optionally disable "longrun" tasks in s6
+  exit 0
+fi
+
 [ ! -z "${TS_STATE_DIR}" ]      && ARGS="--statedir=${TS_STATE_DIR} ${ARGS}"
 [ ! -z "${TS_STATE}" ]          && ARGS="--state=${TS_STATE} ${ARGS}"
 [ "${TS_USERSPACE}" = "true" ]  && ARGS="--tun=userspace-networking ${ARGS}"
 
-set -x
 tailscaled ${ARGS}

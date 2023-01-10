@@ -1,4 +1,5 @@
 #!/command/with-contenv sh
+
 set -e
 
 exec 2>&1

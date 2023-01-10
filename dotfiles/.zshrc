@@ -18,8 +18,14 @@ source $ZSH/oh-my-zsh.sh
 
 source /etc/profile.d/go.sh
 export GOPATH=/home/sandbox/go
-
 export PATH=$PATH:/home/sandbox/go/bin:/home/sandbox/bin
+
+autoload -U +X compinit && compinit
+autoload -U +X bashcompinit && bashcompinit
+
+for f in $(find ~/.bashrc.d -type f | sort -r ); do
+    source $f || echo "[$f] could not load - exit code $?"
+done
 
 # Hook direnv
 eval "$(direnv hook zsh)"
