@@ -20,6 +20,7 @@ RUN apt-get update \
     less \
     locales \
     lsb-release \
+    libsecret-1-dev \
     make \
     man \
     ncdu \
@@ -184,9 +185,6 @@ RUN useradd --shell /usr/bin/zsh --create-home sandbox \
   && echo 'sandbox ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/sandbox \
   && usermod -a -G docker sandbox
 
-# Copy s6-overlay configs
-COPY s6-rc.d /etc/s6-overlay/s6-rc.d
-
 # Copy code-server
 COPY code-server.sh /usr/local/bin/code-server.sh
 
@@ -200,9 +198,7 @@ RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master
 # Copy user dotfiles
 COPY --chown=sandbox:sandbox dotfiles /home/sandbox
 
-RUN chezmoi --exclude scripts --source ~/.config/chezmtoi-public --cache ~/.cache/chezmoi-public --refresh-externals init --apply https://github.com/justmiles/dotfiles.git
-
-RUN bash /etc/s6-overlay/s6-rc.d/chezmoi/scripts/run.sh
+RUN chezmoi --exclude scripts --source ~/.config/chezmoi-public --cache ~/.cache/chezmoi-public --refresh-externals init --apply https://github.com/justmiles/dotfiles.git
 
 # Latest terraform
 RUN tfswitch --latest
@@ -210,8 +206,8 @@ RUN tfswitch --latest
 # Install NVM
 ENV NVM_DIR="/home/sandbox/.nvm"
 RUN curl -sfLo- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | zsh \
- && . $NVM_DIR/nvm.sh \
- && nvm install --lts
+  && . $NVM_DIR/nvm.sh \
+  && nvm install --lts
 
 # Install VS Code Extensions
 # TODO: Figure out how to support the tabnine.tabnine-vscode extension
@@ -237,11 +233,16 @@ RUN for item in \
       zhuangtongfa.Material-theme \
     ; do /usr/local/code-server/bin/code-server --force --install-extension $item; done
 
+RUN mkdir -p ~/.ssh
+
 EXPOSE 8080
 
 WORKDIR /home/sandbox
 
 USER root
+
+# Copy s6-overlay configs
+COPY s6-rc.d /etc/s6-overlay/s6-rc.d
 
 # Set default environment variables
 ENV S6_VERBOSITY 0
@@ -254,3 +255,6 @@ ENV PATH=$PATH:$HOME/bin
 ENTRYPOINT ["/init"]
 
 CMD ["/usr/local/bin/code-server.sh"]
+
+# sudo apt-get clean
+# find /var/log -type f | sudo xargs -I % truncate -s0 %

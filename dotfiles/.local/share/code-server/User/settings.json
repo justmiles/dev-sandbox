@@ -34,7 +34,8 @@
   }
   ],
   "files.associations": {
-    "*.hcl": "terraform"
+    "*.hcl": "terraform",
+    "*.nomad": "terraform"
   },
   "[terraform]": {
     "editor.defaultFormatter": "jkillian.custom-local-formatters"
