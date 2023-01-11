@@ -32,6 +32,7 @@ RUN apt-get update \
     python3-pip \
     rsync \
     sudo \
+    taskwarrior \
     traceroute \
     tree \
     unzip \
@@ -150,6 +151,9 @@ RUN GOBIN=/usr/local/bin/ /usr/local/go/bin/go install github.com/abice/go-enum@
 # Install github.com/m3ng9i/ran
 RUN GOBIN=/usr/local/bin/ /usr/local/go/bin/go install github.com/m3ng9i/ran@latest
 
+# Install github.com/terraform-docs
+RUN GOBIN=/usr/local/bin/ /usr/local/go/bin/go install github.com/terraform-docs/terraform-docs@v0.16.0
+
 # Install https://github.com/rclone/rclone
 RUN curl -sfO https://downloads.rclone.org/rclone-current-linux-amd64.deb \
   && sudo dpkg -i rclone-current-linux-amd64.deb \
@@ -159,8 +163,8 @@ RUN curl -sfO https://downloads.rclone.org/rclone-current-linux-amd64.deb \
 RUN curl -sfLo - https://releases.hashicorp.com/nomad/1.2.3/nomad_1.2.3_linux_amd64.zip | busybox unzip -qd /usr/local/bin - \
  && chmod +x /usr/local/bin/nomad
 
-# TODO: install https://github.com/terraform-docs/terraform-docs
-# TODO: install pip install pre-commit
+# Install pre-commit
+RUN pip install pre-commit
 
 # Install https://github.com/warrensbox/terraform-switcher
 RUN curl -sfLo - https://raw.githubusercontent.com/warrensbox/terraform-switcher/release/install.sh | bash /dev/stdin -b /usr/bin
@@ -184,6 +188,9 @@ RUN mkdir -p /usr/local/code-server \
 RUN useradd --shell /usr/bin/zsh --create-home sandbox \
   && echo 'sandbox ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/sandbox \
   && usermod -a -G docker sandbox
+
+# cleanup
+RUN find /var/log -type f | sudo xargs -I % truncate -s0 %
 
 # Copy code-server
 COPY code-server.sh /usr/local/bin/code-server.sh
@@ -255,6 +262,3 @@ ENV PATH=$PATH:$HOME/bin
 ENTRYPOINT ["/init"]
 
 CMD ["/usr/local/bin/code-server.sh"]
-
-# sudo apt-get clean
-# find /var/log -type f | sudo xargs -I % truncate -s0 %
