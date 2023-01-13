@@ -15,6 +15,7 @@ RUN apt-get update \
     g++ \
     git \
     git-lfs \
+    gnupg \
     htop \
     iputils-ping \
     less \
@@ -24,12 +25,13 @@ RUN apt-get update \
     make \
     man \
     ncdu \
-    netcat \
     net-tools \
+    netcat \
     nmap \
     openssh-client \
     procps \
     python3-pip \
+    rng-tools \
     rsync \
     sudo \
     taskwarrior \
@@ -153,6 +155,9 @@ RUN GOBIN=/usr/local/bin/ /usr/local/go/bin/go install github.com/m3ng9i/ran@lat
 
 # Install github.com/terraform-docs
 RUN GOBIN=/usr/local/bin/ /usr/local/go/bin/go install github.com/terraform-docs/terraform-docs@v0.16.0
+
+# Install github.com/gopasspw/gopass
+RUN GOBIN=/usr/local/bin/ GO111MODULE=on /usr/local/go/bin/go install github.com/gopasspw/gopass@latest
 
 # Install https://github.com/rclone/rclone
 RUN curl -sfO https://downloads.rclone.org/rclone-current-linux-amd64.deb \
