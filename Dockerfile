@@ -161,12 +161,14 @@ RUN GOBIN=/usr/local/bin/ GO111MODULE=on /usr/local/go/bin/go install github.com
 
 # Install https://github.com/rclone/rclone
 RUN curl -sfO https://downloads.rclone.org/rclone-current-linux-amd64.deb \
-  && sudo dpkg -i rclone-current-linux-amd64.deb \
+  && dpkg -i rclone-current-linux-amd64.deb \
   && rm -rf rclone-current-linux-amd64.deb
 
 # Install Nomad
 RUN curl -sfLo - https://releases.hashicorp.com/nomad/1.2.3/nomad_1.2.3_linux_amd64.zip | busybox unzip -qd /usr/local/bin - \
  && chmod +x /usr/local/bin/nomad
+
+RUN curl -sfLo - https://github.com/cjbassi/gotop/releases/download/3.0.0/gotop_3.0.0_linux_amd64.tgz | tar -xzvf - -C /usr/local/bin gotop
 
 # Install pre-commit
 RUN pip install pre-commit
