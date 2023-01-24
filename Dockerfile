@@ -168,6 +168,10 @@ RUN curl -sfO https://downloads.rclone.org/rclone-current-linux-amd64.deb \
 RUN curl -sfLo - https://releases.hashicorp.com/nomad/1.2.3/nomad_1.2.3_linux_amd64.zip | busybox unzip -qd /usr/local/bin - \
  && chmod +x /usr/local/bin/nomad
 
+# Install ctop
+RUN curl -fLo /usr/local/bin/ctop https://github.com/bcicen/ctop/releases/download/v0.7.7/ctop-0.7.7-linux-amd64 && chmod +x /usr/local/bin/ctop
+
+# Install gotop
 RUN curl -sfLo - https://github.com/cjbassi/gotop/releases/download/3.0.0/gotop_3.0.0_linux_amd64.tgz | tar -xzvf - -C /usr/local/bin gotop
 
 # Install pre-commit
@@ -176,7 +180,7 @@ RUN pip install pre-commit
 # Install https://github.com/warrensbox/terraform-switcher
 RUN curl -sfLo - https://raw.githubusercontent.com/warrensbox/terraform-switcher/release/install.sh | bash /dev/stdin -b /usr/bin
 
-# Install  https://github.com/harness/drone-cli
+# Install  https://github.com/harness/drone-cli 
 RUN curl -sfLo - https://github.com/harness/drone-cli/releases/latest/download/drone_linux_amd64.tar.gz | tar -xzf - -C /usr/local/bin
 
 # Install Java
