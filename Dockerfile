@@ -165,7 +165,7 @@ RUN curl -sfO https://downloads.rclone.org/rclone-current-linux-amd64.deb \
   && rm -rf rclone-current-linux-amd64.deb
 
 # Install Nomad
-RUN curl -sfLo - https://releases.hashicorp.com/nomad/1.2.3/nomad_1.2.3_linux_amd64.zip | busybox unzip -qd /usr/local/bin - \
+RUN curl -sfLo - https://releases.hashicorp.com/nomad/1.4.3/nomad_1.4.3_linux_amd64.zip | busybox unzip -qd /usr/local/bin - \
  && chmod +x /usr/local/bin/nomad
 
 # Install ctop
