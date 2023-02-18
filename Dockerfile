@@ -70,7 +70,11 @@ RUN sudo ln -s /usr/bin/python3 /usr/bin/python \
 RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" \
   && unzip awscliv2.zip \
   && sudo ./aws/install --update \
-  && rm -rf aws awscliv2.zip
+  && rm -rf aws awscliv2.zip \
+  && curl -sfLo "session-manager-plugin.deb" "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_64bit/session-manager-plugin.deb" \
+  && dpkg -i "session-manager-plugin.deb" \
+  && rm "session-manager-plugin.deb"
+
 
 # Install https://github.com/stedolan/jq
 RUN curl -sfLo /usr/local/bin/jq https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 \
