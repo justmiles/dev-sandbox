@@ -1,4 +1,4 @@
-FROM ubuntu:focal
+FROM ubuntu:jammy
 
 ENV CODE_SERVER_RELEASE=4.9.1
 ENV DEBIAN_FRONTEND=noninteractive
