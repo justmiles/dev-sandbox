@@ -28,5 +28,6 @@ if [ ! -z "${TS_DOMAIN_ALIAS}" ] && [ "${TS_SSL_ENABLED}" = "true" ]  ; then
 fi
 
 export HOME=/home/sandbox
+export PATH=$HOME/.nix-profile/bin:$PATH
 
 exec s6-setuidgid sandbox /usr/local/code-server/bin/code-server $ARGS

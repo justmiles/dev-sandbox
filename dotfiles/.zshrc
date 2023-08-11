@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
+export ZSH="$HOME/.local/share/oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -14,11 +14,10 @@ DISABLE_AUTO_TITLE="true"
 
 plugins=(git)
 
-source $ZSH/oh-my-zsh.sh
+[ -f "$ZSH/oh-my-zsh.sh" ] && source $ZSH/oh-my-zsh.sh
+[ -f "$HOME/.nix-profile/etc/profile.d/nix.sh" ] && source $HOME/.nix-profile/etc/profile.d/nix.sh
 
-source /etc/profile.d/go.sh
-export GOPATH=/home/sandbox/go
-export PATH=$PATH:/home/sandbox/go/bin:/home/sandbox/bin
+export GOPATH=$HOME/go
 
 autoload -U +X compinit && compinit
 autoload -U +X bashcompinit && bashcompinit
@@ -29,6 +28,3 @@ done
 
 # Hook direnv
 eval "$(direnv hook zsh)"
-
-# Load NVM
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" 

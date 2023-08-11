@@ -62,26 +62,13 @@ All environment variables are optional.
 | ENTRYPOINT_HOOKS | path to directory of executables to be invoked before launching code-server                           |                     |
 | CHEZMOI_REPO     | optional Chezmoi repo to init                                                                         |                     |
 
-<!--
-TODO: install docker better
-https://docs.docker.com/engine/install/ubuntu/#:~:text=To%20upgrade%20Docker%20Engine%2C%20first,version%20you%20want%20to%20install.
+- import gpg key on startup: cat justmiles.key | gpg --batch --import
+- Install docker-compose
 
+  ```bash
+  curl -SL https://github.com/docker/compose/releases/download/v2.17.2/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
+  chmod +x /usr/local/bin/docker-compose
+  ```
 
-sudo mkdir -p /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-
-echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-
-
-  sudo apt-get update
-
-
-
-  sudo chmod a+r /etc/apt/keyrings/docker.gpg
-sudo apt-get update
-
-
-
-sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin -->
+- Install jira
+  go install github.com/go-jira/jira/cmd/jira@latest
