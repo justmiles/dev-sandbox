@@ -2,6 +2,9 @@
 
 if [ ! -z "${CHEZMOI_REPO}" ]; then
   cat <<"EOF" | HOME=/home/sandbox exec s6-setuidgid sandbox bash
+
+export PATH=$PATH:$HOME/.nix-profile/bin
+
 chmod 0600 ~/.ssh/id_rsa
 
 ssh-keyscan -H github.com >> /home/sandbox/.ssh/known_hosts 2>/dev/null
