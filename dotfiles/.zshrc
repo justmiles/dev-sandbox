@@ -1,3 +1,6 @@
+
+export PATH=$PATH:$HOME/.local/bin:$HOME/bin
+
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.local/share/oh-my-zsh"
 

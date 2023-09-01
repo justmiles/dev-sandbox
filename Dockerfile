@@ -172,6 +172,8 @@ RUN for item in \
       # Install snazzy themes
       pkief.material-icon-theme \
       zhuangtongfa.Material-theme \
+      mtxr.sqltools \
+      mtxr.sqltools-driver-pg \
     ; do /usr/local/code-server/bin/code-server --force --install-extension $item; done
 
 RUN mkdir -p ~/.ssh
