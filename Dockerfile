@@ -138,8 +138,9 @@ RUN export PATH=$HOME/.nix-profile/bin:$PATH \
   nomad \
   pre-commit \
   tfswitch \
-  python3 \
+  python3 pipx \
   oh-my-zsh \
+&& nix-env -iA nixpkgs.python311Packages.pip \
  && go install github.com/justmiles/git-bump@latest \
  && go install github.com/go-jira/jira/cmd/jira@latest \
  && nix-env --delete-generations old \
@@ -174,6 +175,7 @@ RUN for item in \
       zhuangtongfa.Material-theme \
       mtxr.sqltools \
       mtxr.sqltools-driver-pg \
+      nixpkgs-fmt \
     ; do /usr/local/code-server/bin/code-server --force --install-extension $item; done
 
 RUN mkdir -p ~/.ssh
