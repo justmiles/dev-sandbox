@@ -132,6 +132,7 @@ RUN export PATH=$HOME/.nix-profile/bin:$PATH \
   golangci-lint \
   gdlv \
   terraform-docs \
+  packer \
   gopass \
   rclone \
   drone-cli \
@@ -158,6 +159,7 @@ RUN for item in \
       golang.go \
       # Terrafomr
       hashicorp.terraform \
+      hashicorp.hcl \
       # Python
       ms-python.python \
       # Java
