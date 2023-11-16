@@ -125,6 +125,7 @@ RUN export PATH=$HOME/.nix-profile/bin:$PATH \
   yq \
   restic \
   go \
+  pipx \
   pwgen \
   textql-unstable \
   hclfmt \
@@ -144,6 +145,7 @@ RUN export PATH=$HOME/.nix-profile/bin:$PATH \
 && nix-env -iA nixpkgs.python311Packages.pip \
  && go install github.com/justmiles/git-bump@latest \
  && go install github.com/go-jira/jira/cmd/jira@latest \
+ && pipx install shell-gpt \
  && nix-env --delete-generations old \
  && nix-store --gc
 
