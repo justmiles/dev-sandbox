@@ -100,6 +100,9 @@ COPY code-server.sh /usr/local/bin/code-server.sh
 
 USER sandbox
 
+# Install https://github.com/ddworken/hishtory
+RUN curl -sfLo hishtory https://github.com/ddworken/hishtory/releases/download/v0.251/hishtory-linux-amd64 && chmod +x hishtory && ./hishtory install
+
 RUN sh /tmp/nix-install --no-daemon
 
 WORKDIR /home/sandbox
@@ -145,6 +148,7 @@ RUN export PATH=$HOME/.nix-profile/bin:$PATH \
 && nix-env -iA nixpkgs.python311Packages.pip \
  && go install github.com/justmiles/git-bump@latest \
  && go install github.com/go-jira/jira/cmd/jira@latest \
+ && go install github.com/appleboy/CodeGPT/cmd/codegpt@latest \
  && pipx install shell-gpt \
  && nix-env --delete-generations old \
  && nix-store --gc
