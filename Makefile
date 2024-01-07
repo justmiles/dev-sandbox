@@ -10,3 +10,6 @@ run:
 
 run-shell:
 	docker run --rm -it --name dev-sandbox -v $$PWD:/home/sandbox/workspaces --entrypoint zsh justmiles/dev-sandbox
+
+cloudshell:
+	nix-build cloudshell.nix && docker load < result
