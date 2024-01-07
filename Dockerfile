@@ -149,6 +149,7 @@ RUN export PATH=$HOME/.nix-profile/bin:$PATH \
  && go install github.com/justmiles/git-bump@latest \
  && go install github.com/go-jira/jira/cmd/jira@latest \
  && go install github.com/appleboy/CodeGPT/cmd/codegpt@latest \
+ && go install github.com/ichinaski/pxl@latest \
  && pipx install shell-gpt \
  && nix-env --delete-generations old \
  && nix-store --gc
