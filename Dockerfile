@@ -101,7 +101,7 @@ COPY code-server.sh /usr/local/bin/code-server.sh
 USER sandbox
 
 # Install https://github.com/ddworken/hishtory
-RUN curl -sfLo hishtory https://github.com/ddworken/hishtory/releases/download/v0.251/hishtory-linux-amd64 && chmod +x hishtory && ./hishtory install
+RUN curl -sfLo hishtory https://github.com/ddworken/hishtory/releases/download/v0.251/hishtory-linux-amd64 && chmod +x hishtory && ./hishtory install --offline
 
 RUN sh /tmp/nix-install --no-daemon
 
