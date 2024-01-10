@@ -145,7 +145,9 @@ RUN export PATH=$HOME/.nix-profile/bin:$PATH \
   tfswitch \
   python3 pipx \
   oh-my-zsh \
-&& nix-env -iA nixpkgs.python311Packages.pip \
+&& nix-env -iA \
+  nixpkgs.python311Packages.pip \
+  nixpkgs.rconc \
  && go install github.com/justmiles/git-bump@latest \
  && go install github.com/go-jira/jira/cmd/jira@latest \
  && go install github.com/appleboy/CodeGPT/cmd/codegpt@latest \
