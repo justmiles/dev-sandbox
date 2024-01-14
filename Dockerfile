@@ -80,6 +80,9 @@ RUN curl -sfLo - https://github.com/justmiles/jumpcloud-cli/releases/download/v0
 RUN mkdir -p /usr/local/code-server \
   && curl -sfLo - https://github.com/coder/code-server/releases/download/v${CODE_SERVER_RELEASE}/code-server-${CODE_SERVER_RELEASE}-linux-amd64.tar.gz | tar -xzf - -C /usr/local/code-server --strip-components=1
 
+# Install https://github.com/ddworken/hishtory
+RUN curl -sfLo /usr/local/bin/hishtory https://github.com/ddworken/hishtory/releases/download/v0.251/hishtory-linux-amd64 && chmod +x /usr/local/bin/hishtory
+
 # Setup sandbox user
 RUN useradd --shell /home/sandbox/.nix-profile/bin/zsh --create-home sandbox \
   && echo 'sandbox ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/sandbox \
@@ -100,15 +103,12 @@ COPY code-server.sh /usr/local/bin/code-server.sh
 
 USER sandbox
 
-# Install https://github.com/ddworken/hishtory
-RUN curl -sfLo hishtory https://github.com/ddworken/hishtory/releases/download/v0.251/hishtory-linux-amd64 && chmod +x hishtory && ./hishtory install --offline
-
 RUN sh /tmp/nix-install --no-daemon
 
 WORKDIR /home/sandbox
 
 RUN export PATH=$HOME/.nix-profile/bin:$PATH \
-  && nix-env -i \
+  && NIXPKGS_ALLOW_UNFREE=1 nix-env -i \
   ran \
   rsync \
   unzip \
@@ -189,7 +189,7 @@ RUN for item in \
       nixpkgs-fmt \
     ; do /usr/local/code-server/bin/code-server --force --install-extension $item; done
 
-RUN mkdir -p ~/.ssh
+RUN mkdir -p ~/.ssh ~/.hishtory && hishtory completion zsh > ~/.hishtory/config.zsh
 
 EXPOSE 8080
 
