@@ -18,24 +18,19 @@
     "titleBar.inactiveBackground": "#7da49999",
     "titleBar.inactiveForeground": "#15202b99"
   },
-  "peacock.remoteColor": "#7da499",
   "customLocalFormatters.formatters": [
     {
-      "command": "~/bin/terraform fmt -",
+      "command": "~/.local/bin/terraform fmt -",
       "languages": ["terraform"]
     },
     {
       "command": "~/.nix-profile/bin/nomad fmt -",
-      "languages": ["nomad"]
-    },
-    {
-      "command": "~/.nix-profile/bin/packer fmt -",
       "languages": ["hcl"]
     }
   ],
   "files.associations": {
     "*.hcl": "hcl",
-    "*.nomad": "nomad",
+    "*.nomad.hcl": "hcl",
     "*.pkr.hcl": "hcl"
   },
   "[terraform]": {

@@ -154,7 +154,8 @@ RUN export PATH=$HOME/.nix-profile/bin:$PATH \
  && go install github.com/ichinaski/pxl@latest \
  && pipx install shell-gpt \
  && nix-env --delete-generations old \
- && nix-store --gc
+ && nix-store --gc \
+ && tfswitch --latest
 
 # Copy user dotfiles
 COPY --chown=sandbox:sandbox dotfiles /home/sandbox
