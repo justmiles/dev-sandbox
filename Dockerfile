@@ -180,6 +180,8 @@ RUN for item in \
       redhat.vscode-yaml \
       jkillian.custom-local-formatters \
       # Generic tools
+      rjmacarthy.twinny \
+      johnpapa.vscode-peacock \
       eamodio.gitlens \
       jebbs.plantuml \
       # Install snazzy themes
