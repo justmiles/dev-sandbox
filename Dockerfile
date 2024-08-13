@@ -71,7 +71,7 @@ RUN curl -sfLo - https://github.com/justmiles/ecs-deploy/releases/download/v0.5.
 RUN curl -sfLo - https://github.com/justmiles/athena-cli/releases/download/v0.1.10/athena-cli_0.1.10_linux_x86_64.tar.gz | tar -xzf - -C /usr/local/bin athena
 
 # Install https://github.com/justmiles/ecs-cli
-RUN curl -sfLo - https://github.com/justmiles/ecs-cli/releases/download/v0.3.2/ecs_0.3.2_Linux_x86_64.tar.gz | tar -xzf - -C /usr/local/bin ecs
+RUN curl -sfLo - https://github.com/justmiles/ecs-cli/releases/download/v0.5.4/ecs_0.5.4_Linux_x86_64.tar.gz | tar -xzf - -C /usr/local/bin ecs
 
 # Install https://github.com/justmiles/jumpcloud-cli
 RUN curl -sfLo - https://github.com/justmiles/jumpcloud-cli/releases/download/v0.0.5/jumpcloud-cli_0.0.5_Linux_x86_64.tar.gz | tar -xzf - -C /usr/local/bin jc
