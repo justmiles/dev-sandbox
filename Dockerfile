@@ -1,4 +1,4 @@
-FROM ubuntu:jammy
+FROM ubuntu:noble
 
 # Pinned Versions
 ENV CODE_SERVER_RELEASE=4.20.1
