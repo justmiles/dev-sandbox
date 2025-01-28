@@ -15,9 +15,7 @@ docker run \
   justmiles/dev-sandbox:latest
 ```
 
-###
-
-Use [Tailscale HTTPS](https://tailscale.com/kb/1153/enabling-https/)
+or with Tailscale
 
 ```
 docker run --privileged \
@@ -62,13 +60,12 @@ All environment variables are optional.
 | ENTRYPOINT_HOOKS | path to directory of executables to be invoked before launching code-server                           |                     |
 | CHEZMOI_REPO     | optional Chezmoi repo to init                                                                         |                     |
 
-- import gpg key on startup: cat justmiles.key | gpg --batch --import
-- Install docker-compose
+## Useful Snippits
 
-  ```bash
-  curl -SL https://github.com/docker/compose/releases/download/v2.17.2/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
-  chmod +x /usr/local/bin/docker-compose
-  ```
+Upgrade all the Nix installed packages
 
-- Install jira
-  go install github.com/go-jira/jira/cmd/jira@latest
+```bash
+export NIXPKGS_ALLOW_UNFREE=1
+nix-channel --update
+nix-env -u '*'
+```

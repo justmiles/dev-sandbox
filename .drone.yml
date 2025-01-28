@@ -14,3 +14,8 @@ steps:
     auto_tag: true
     cache_from:
       - "justmiles/dev-sandbox:latest"
+
+- name: semantic-release
+  image: hoppr/semantic-release:latest
+  commands:
+  - semantic-release

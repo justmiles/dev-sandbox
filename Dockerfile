@@ -13,6 +13,7 @@ RUN apt-get update \
     curl \
     dnsutils \
     docker.io \
+    docker-buildx \
     g++ \
     git \
     git-lfs \
@@ -83,6 +84,9 @@ RUN mkdir -p /usr/local/code-server \
 # Install https://github.com/ddworken/hishtory
 RUN curl -sfLo /usr/local/bin/hishtory https://github.com/ddworken/hishtory/releases/download/v0.251/hishtory-linux-amd64 && chmod +x /usr/local/bin/hishtory
 
+# Install https://github.com/sigoden/aichat
+RUN curl -sfLo - https://github.com/sigoden/aichat/releases/download/v0.26.0/aichat-v0.26.0-x86_64-unknown-linux-musl.tar.gz | tar -xzf - -C /usr/local/bin aichat
+
 # Setup sandbox user
 RUN useradd --shell /home/sandbox/.nix-profile/bin/zsh --create-home sandbox \
   && echo 'sandbox ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/sandbox \
@@ -118,9 +122,13 @@ RUN export PATH=$HOME/.nix-profile/bin:$PATH \
   taskwarrior \
   gopass \
   direnv \
+  docker-compose \
+  dstask \
+  ollama \
   awscli2 \
   ssm-session-manager-plugin \
   csvq \
+  gh \
   grex \
   gron \
   watchexec \
