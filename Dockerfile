@@ -113,46 +113,46 @@ WORKDIR /home/sandbox
 
 RUN export PATH=$HOME/.nix-profile/bin:$PATH \
   && NIXPKGS_ALLOW_UNFREE=1 nix-env -i \
-  ran \
-  rsync \
-  unzip \
-  zsh \
-  jq \
+  awscli2 \
   chezmoi \
-  taskwarrior \
-  gopass \
+  csvq \
   direnv \
   docker-compose \
+  drone-cli \
   dstask \
-  ollama \
-  awscli2 \
-  ssm-session-manager-plugin \
-  csvq \
+  gdlv \
   gh \
+  go \
+  golangci-lint \
+  gopass \
+  gopass \
+  gopls \
   grex \
   gron \
+  hclfmt \
+  jq \
+  nomad \
+  oh-my-zsh \
+  ollama \
+  packer \
+  pipx \
+  pre-commit \
+  pwgen \
+  python3 pipx \
+  ran \
+  rclone \
+  restic \
+  rsync \
+  ssm-session-manager-plugin \
+  taskwarrior \
+  terraform-docs \
+  textql-unstable \
+  tfswitch \
+  unzip \
   watchexec \
   whois \
   yq \
-  restic \
-  go \
-  pipx \
-  pwgen \
-  textql-unstable \
-  hclfmt \
-  gopls \
-  golangci-lint \
-  gdlv \
-  terraform-docs \
-  packer \
-  gopass \
-  rclone \
-  drone-cli \
-  nomad \
-  pre-commit \
-  tfswitch \
-  python3 pipx \
-  oh-my-zsh \
+  zsh \
 && nix-env -iA \
   nixpkgs.python311Packages.pip \
   nixpkgs.rconc \
@@ -162,8 +162,7 @@ RUN export PATH=$HOME/.nix-profile/bin:$PATH \
  && go install github.com/ichinaski/pxl@latest \
  && pipx install shell-gpt \
  && nix-env --delete-generations old \
- && nix-store --gc \
- && tfswitch --latest
+ && nix-store --gc
 
 # Copy user dotfiles
 COPY --chown=sandbox:sandbox dotfiles /home/sandbox
