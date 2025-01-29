@@ -17,5 +17,8 @@ steps:
 
 - name: semantic-release
   image: hoppr/semantic-release:latest
+  environment:
+    GH_TOKEN: 
+      from_secret: github_token
   commands:
   - semantic-release
