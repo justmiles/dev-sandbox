@@ -21,6 +21,12 @@
   },
   "customLocalFormatters.formatters": [
     {
+      "command": "~/.nix-profile/bin/hclfmt",
+      "languages": [
+        "hcl"
+      ]
+    },
+    {
       "command": "~/.local/bin/terraform fmt -",
       "languages": ["terraform"]
     },

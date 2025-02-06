@@ -1,3 +1,26 @@
+FROM ubuntu:jammy AS stoken
+
+RUN apt-get update && apt-get install -y \
+    libgtk-3-dev \
+    libtomcrypt-dev \
+    libxml2-dev \
+    autoconf \
+    automake \
+    libtool \
+    build-essential \
+    git \
+    && mkdir -p /tmp/build \
+    && git clone https://github.com/stoken-dev/stoken /tmp/stoken \
+    && cd /tmp/stoken \
+  && ./autogen.sh \
+  && ./configure --prefix=/tmp/build \
+  && make \
+  && make check \
+    && make install \
+    && apt-get clean \
+    && apt-get autoremove --yes \
+    && rm -rf /var/lib/apt/lists/* /tmp/stoken
+
 FROM ubuntu:jammy
 
 # Pinned Versions
@@ -40,6 +63,10 @@ RUN apt-get update \
   && apt-get clean autoclean \
   && apt-get autoremove --yes \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/
+
+COPY --from=stoken /tmp/build/lib /lib
+COPY --from=stoken /tmp/build/bin /bin
+COPY --from=stoken /tmp/build/share /share
 
 # Configure Docker
 RUN groupmod -g 997 docker
@@ -172,6 +199,8 @@ RUN $HOME/.nix-profile/bin/chezmoi --exclude scripts --source ~/.config/chezmoi-
 # Install VS Code Extensions
 # TODO: Figure out how to support the tabnine.tabnine-vscode extension
 RUN for item in \
+      # AI
+      Continue.continue \
       # Golang
       golang.go \
       # Terrafomr
