@@ -175,6 +175,7 @@ RUN export PATH=$HOME/.nix-profile/bin:$PATH \
   terraform-docs \
   textql-unstable \
   tfswitch \
+  tldr \
   unzip \
   watchexec \
   whois \
@@ -203,7 +204,7 @@ RUN for item in \
       Continue.continue \
       # Golang
       golang.go \
-      # Terrafomr
+      # Terraform
       hashicorp.terraform \
       hashicorp.hcl \
       # Python
@@ -216,7 +217,6 @@ RUN for item in \
       redhat.vscode-yaml \
       jkillian.custom-local-formatters \
       # Generic tools
-      rjmacarthy.twinny \
       johnpapa.vscode-peacock \
       eamodio.gitlens \
       jebbs.plantuml \
