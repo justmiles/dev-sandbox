@@ -245,4 +245,5 @@ ENV S6_CMD_WAIT_FOR_SERVICES_MAXTIME 0
 ENV PATH=$PATH:$HOME/bin
 ENTRYPOINT ["/init"]
 
+COPY media /usr/local/code-server/src/browser/media
 CMD ["/usr/local/bin/code-server.sh"]
