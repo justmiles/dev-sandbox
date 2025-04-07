@@ -24,7 +24,7 @@ RUN apt-get update && apt-get install -y \
 FROM ubuntu:jammy
 
 # Pinned Versions
-ENV CODE_SERVER_RELEASE=4.20.1
+ENV CODE_SERVER_RELEASE=4.98.2
 ENV S6_OVERLAY_RELEASE=3.1.0.1
 
 ENV DEBIAN_FRONTEND=noninteractive
@@ -139,51 +139,49 @@ RUN sh /tmp/nix-install --no-daemon
 WORKDIR /home/sandbox
 
 RUN export PATH=$HOME/.nix-profile/bin:$PATH \
-  && NIXPKGS_ALLOW_UNFREE=1 nix-env -i \
-  awscli2 \
-  chezmoi \
-  csvq \
-  direnv \
-  docker-compose \
-  drone-cli \
-  dstask \
-  gdlv \
-  gh \
-  go \
-  golangci-lint \
-  gopass \
-  gopass \
-  gopls \
-  grex \
-  gron \
-  hclfmt \
-  jq \
-  nomad \
-  oh-my-zsh \
-  ollama \
-  packer \
-  pipx \
-  pre-commit \
-  pwgen \
-  python3 pipx \
-  ran \
-  rclone \
-  restic \
-  rsync \
-  ssm-session-manager-plugin \
-  taskwarrior \
-  terraform-docs \
-  textql-unstable \
-  tfswitch \
-  tldr \
-  unzip \
-  watchexec \
-  whois \
-  yq \
-  zsh \
-&& nix-env -iA \
+  && NIXPKGS_ALLOW_UNFREE=1 nix-env -iA \
+  nixpkgs.awscli2 \
+  nixpkgs.chezmoi \
+  nixpkgs.csvq \
+  nixpkgs.direnv \
+  nixpkgs.docker-compose \
+  nixpkgs.drone-cli \
+  nixpkgs.dstask \
+  nixpkgs.gdlv \
+  nixpkgs.gh \
+  nixpkgs.go \
+  nixpkgs.golangci-lint \
+  nixpkgs.gopass \
+  nixpkgs.gopass \
+  nixpkgs.gopls \
+  nixpkgs.grex \
+  nixpkgs.gron \
+  nixpkgs.hclfmt \
+  nixpkgs.jq \
+  nixpkgs.nomad \
+  nixpkgs.oh-my-zsh \
+  nixpkgs.ollama \
+  nixpkgs.packer \
+  nixpkgs.pipx \
+  nixpkgs.pre-commit \
+  nixpkgs.pwgen \
+  nixpkgs.python3 \
   nixpkgs.python311Packages.pip \
+  nixpkgs.ran \
+  nixpkgs.rclone \
   nixpkgs.rconc \
+  nixpkgs.restic \
+  nixpkgs.rsync \
+  nixpkgs.ssm-session-manager-plugin \
+  nixpkgs.terraform-docs \
+  nixpkgs.textql \
+  nixpkgs.tfswitch \
+  nixpkgs.tldr \
+  nixpkgs.unzip \
+  nixpkgs.watchexec \
+  nixpkgs.whois \
+  nixpkgs.yq \
+  nixpkgs.zsh \
  && go install github.com/justmiles/git-bump@latest \
  && go install github.com/go-jira/jira/cmd/jira@latest \
  && go install github.com/appleboy/CodeGPT/cmd/codegpt@latest \
@@ -198,10 +196,9 @@ COPY --chown=sandbox:sandbox dotfiles /home/sandbox
 RUN $HOME/.nix-profile/bin/chezmoi --exclude scripts --source ~/.config/chezmoi-public --cache ~/.cache/chezmoi-public --refresh-externals init --apply https://github.com/justmiles/dotfiles.git
 
 # Install VS Code Extensions
-# TODO: Figure out how to support the tabnine.tabnine-vscode extension
 RUN for item in \
       # AI
-      Continue.continue \
+      RooVeterinaryInc.roo-cline \
       # Golang
       golang.go \
       # Terraform
@@ -218,14 +215,12 @@ RUN for item in \
       jkillian.custom-local-formatters \
       # Generic tools
       johnpapa.vscode-peacock \
-      eamodio.gitlens \
       jebbs.plantuml \
       # Install snazzy themes
       pkief.material-icon-theme \
       zhuangtongfa.Material-theme \
       mtxr.sqltools \
       mtxr.sqltools-driver-pg \
-      nixpkgs-fmt \
     ; do /usr/local/code-server/bin/code-server --force --install-extension $item; done
 
 RUN mkdir -p ~/.ssh ~/.hishtory && hishtory completion zsh > ~/.hishtory/config.zsh
