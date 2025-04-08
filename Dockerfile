@@ -1,4 +1,4 @@
-FROM ubuntu:jammy AS stoken
+FROM ubuntu:noble AS stoken
 
 RUN apt-get update && apt-get install -y \
     libgtk-3-dev \
@@ -21,7 +21,7 @@ RUN apt-get update && apt-get install -y \
     && apt-get autoremove --yes \
     && rm -rf /var/lib/apt/lists/* /tmp/stoken
 
-FROM ubuntu:jammy
+FROM ubuntu:noble
 
 # Pinned Versions - GitHub Releases
 ENV GITHUB_RELEASE_CODER__CODE_SERVER=4.99.0
