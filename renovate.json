@@ -10,7 +10,7 @@
         "ENV GITHUB_RELEASE_(?<depName>[A-Z0-9_]+)=(?<currentValue>.*?)\\s"
       ],
       "datasourceTemplate": "github-releases",
-      "depNameTemplate": "{{#if depName}}{{lowercase (replace '_' '/' depName)}}{{/if}}",
+      "depNameTemplate": "{{#if depName}}{{lowercase (replace '_' '-' (replace '__' '/' depName))}}{{/if}}",
       "extractVersionTemplate": "^v?(?<version>.*)$"
     }
   ]
