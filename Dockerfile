@@ -60,6 +60,7 @@ RUN apt-get update \
     tree \
     vim \
     wget \
+  && apt-get install -y libnss3-dev libatk1.0-0 libatk-bridge2.0-dev libcups2-dev libxkbcommon-dev libxcomposite-dev libxdamage-dev libxrandr-dev libgbm-dev libpango-1.0-0 libcairo2-dev libasound2-dev \
   && apt-get clean autoclean \
   && apt-get autoremove --yes \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/
