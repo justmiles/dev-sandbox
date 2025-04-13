@@ -85,8 +85,8 @@ RUN sed -i "s/# en_US.UTF-8/en_US.UTF-8/" /etc/locale.gen \
   && locale-gen
 
 # Install s6-overlay
-RUN curl -sfLo - https://github.com/just-containers/s6-overlay/releases/download/v${GITHUB_RELEASE_JUST_CONTAINERS_S6_OVERLAY}/s6-overlay-noarch.tar.xz | tar -Jxpf - -C /
-RUN curl -sfLo - https://github.com/just-containers/s6-overlay/releases/download/v${GITHUB_RELEASE_JUST_CONTAINERS_S6_OVERLAY}/s6-overlay-x86_64.tar.xz | tar -Jxpf - -C /
+RUN curl -sfLo - https://github.com/just-containers/s6-overlay/releases/download/v${GITHUB_RELEASE_JUST_CONTAINERS__S6_OVERLAY}/s6-overlay-noarch.tar.xz | tar -Jxpf - -C /
+RUN curl -sfLo - https://github.com/just-containers/s6-overlay/releases/download/v${GITHUB_RELEASE_JUST_CONTAINERS__S6_OVERLAY}/s6-overlay-x86_64.tar.xz | tar -Jxpf - -C /
 
 # Install tailscale
 RUN curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/focal.gpg | sudo apt-key add - \
@@ -95,33 +95,33 @@ RUN curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/focal.gpg | sudo apt-key
      && apt-get install -y tailscale
 
 # Install https://github.com/justmiles/go-get-ssm-params
-RUN curl -sfLo - https://github.com/justmiles/go-get-ssm-params/releases/download/v${GITHUB_RELEASE_JUSTMILES_GO_GET_SSM_PARAMS}/get-ssm-params_${GITHUB_RELEASE_JUSTMILES_GO_GET_SSM_PARAMS}_Linux_x86_64.tar.gz | tar -xzf - -C /usr/local/bin get-ssm-params \
+RUN curl -sfLo - https://github.com/justmiles/go-get-ssm-params/releases/download/v${GITHUB_RELEASE_JUSTMILES__GO_GET_SSM_PARAMS}/get-ssm-params_${GITHUB_RELEASE_JUSTMILES__GO_GET_SSM_PARAMS}_Linux_x86_64.tar.gz | tar -xzf - -C /usr/local/bin get-ssm-params \
   && chmod +x /usr/local/bin/get-ssm-params
 
 # Install https://github.com/justmiles/ssm-parameter-store
-RUN curl -sfLo - https://github.com/justmiles/ssm-parameter-store/releases/download/v${GITHUB_RELEASE_JUSTMILES_SSM_PARAMETER_STORE}/ssm-parameter-store_${GITHUB_RELEASE_JUSTMILES_SSM_PARAMETER_STORE}_Linux_x86_64.tar.gz | tar -xzf - -C /usr/local/bin ssm-parameter-store
+RUN curl -sfLo - https://github.com/justmiles/ssm-parameter-store/releases/download/v${GITHUB_RELEASE_JUSTMILES__SSM_PARAMETER_STORE}/ssm-parameter-store_${GITHUB_RELEASE_JUSTMILES__SSM_PARAMETER_STORE}_Linux_x86_64.tar.gz | tar -xzf - -C /usr/local/bin ssm-parameter-store
 
 # Install https://github.com/justmiles/ecs-deploy
-RUN curl -sfLo - https://github.com/justmiles/ecs-deploy/releases/download/v${GITHUB_RELEASE_JUSTMILES_ECS_DEPLOY}/ecs-deploy_${GITHUB_RELEASE_JUSTMILES_ECS_DEPLOY}_Linux_arm64.tar.gz | tar -xzf - -C /usr/local/bin ecs-deploy
+RUN curl -sfLo - https://github.com/justmiles/ecs-deploy/releases/download/v${GITHUB_RELEASE_JUSTMILES__ECS_DEPLOY}/ecs-deploy_${GITHUB_RELEASE_JUSTMILES__ECS_DEPLOY}_Linux_arm64.tar.gz | tar -xzf - -C /usr/local/bin ecs-deploy
 
 # Install https://github.com/justmiles/athena-cli
-RUN curl -sfLo - https://github.com/justmiles/athena-cli/releases/download/v${GITHUB_RELEASE_JUSTMILES_ATHENA_CLI}/athena-cli_${GITHUB_RELEASE_JUSTMILES_ATHENA_CLI}_linux_x86_64.tar.gz | tar -xzf - -C /usr/local/bin athena
+RUN curl -sfLo - https://github.com/justmiles/athena-cli/releases/download/v${GITHUB_RELEASE_JUSTMILES__ATHENA_CLI}/athena-cli_${GITHUB_RELEASE_JUSTMILES__ATHENA_CLI}_linux_x86_64.tar.gz | tar -xzf - -C /usr/local/bin athena
 
 # Install https://github.com/justmiles/ecs-cli
-RUN curl -sfLo - https://github.com/justmiles/ecs-cli/releases/download/v${GITHUB_RELEASE_JUSTMILES_ECS_CLI}/ecs_${GITHUB_RELEASE_JUSTMILES_ECS_CLI}_Linux_x86_64.tar.gz | tar -xzf - -C /usr/local/bin ecs
+RUN curl -sfLo - https://github.com/justmiles/ecs-cli/releases/download/v${GITHUB_RELEASE_JUSTMILES__ECS_CLI}/ecs_${GITHUB_RELEASE_JUSTMILES__ECS_CLI}_Linux_x86_64.tar.gz | tar -xzf - -C /usr/local/bin ecs
 
 # Install https://github.com/justmiles/jumpcloud-cli
-RUN curl -sfLo - https://github.com/justmiles/jumpcloud-cli/releases/download/v${GITHUB_RELEASE_JUSTMILES_JUMPCLOUD_CLI}/jumpcloud-cli_${GITHUB_RELEASE_JUSTMILES_JUMPCLOUD_CLI}_Linux_x86_64.tar.gz | tar -xzf - -C /usr/local/bin jc
+RUN curl -sfLo - https://github.com/justmiles/jumpcloud-cli/releases/download/v${GITHUB_RELEASE_JUSTMILES__JUMPCLOUD_CLI}/jumpcloud-cli_${GITHUB_RELEASE_JUSTMILES__JUMPCLOUD_CLI}_Linux_x86_64.tar.gz | tar -xzf - -C /usr/local/bin jc
 
 # Install https://github.com/coder/code-server
 RUN mkdir -p /usr/local/code-server \
-  && curl -sfLo - https://github.com/coder/code-server/releases/download/v${GITHUB_RELEASE_CODER_CODE_SERVER}/code-server-${GITHUB_RELEASE_CODER_CODE_SERVER}-linux-amd64.tar.gz | tar -xzf - -C /usr/local/code-server --strip-components=1
+  && curl -sfLo - https://github.com/coder/code-server/releases/download/v${GITHUB_RELEASE_CODER__CODE_SERVER}/code-server-${GITHUB_RELEASE_CODER__CODE_SERVER}-linux-amd64.tar.gz | tar -xzf - -C /usr/local/code-server --strip-components=1
 
 # Install https://github.com/ddworken/hishtory
-RUN curl -sfLo /usr/local/bin/hishtory https://github.com/ddworken/hishtory/releases/download/v${GITHUB_RELEASE_DDWORKEN_HISHTORY}/hishtory-linux-amd64 && chmod +x /usr/local/bin/hishtory
+RUN curl -sfLo /usr/local/bin/hishtory https://github.com/ddworken/hishtory/releases/download/v${GITHUB_RELEASE_DDWORKEN__HISHTORY}/hishtory-linux-amd64 && chmod +x /usr/local/bin/hishtory
 
 # Install https://github.com/sigoden/aichat
-RUN curl -sfLo - https://github.com/sigoden/aichat/releases/download/v${GITHUB_RELEASE_SIGODEN_AICHAT}/aichat-v${GITHUB_RELEASE_SIGODEN_AICHAT}-x86_64-unknown-linux-musl.tar.gz | tar -xzf - -C /usr/local/bin aichat
+RUN curl -sfLo - https://github.com/sigoden/aichat/releases/download/v${GITHUB_RELEASE_SIGODEN__AICHAT}/aichat-v${GITHUB_RELEASE_SIGODEN__AICHAT}-x86_64-unknown-linux-musl.tar.gz | tar -xzf - -C /usr/local/bin aichat
 
 # Setup sandbox user
 RUN useradd --shell /home/sandbox/.nix-profile/bin/zsh --create-home sandbox \
