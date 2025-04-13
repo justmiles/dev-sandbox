@@ -1,24 +1,35 @@
 kind: pipeline
+type: docker
 name: default
 
 steps:
+- name: semantic-release
+  image: node:16
+  commands:
+    - npm install -g semantic-release @semantic-release/git @semantic-release/changelog
+    - semantic-release
+  environment:
+    GITHUB_TOKEN:
+      from_secret: github_token
+  when:
+    branch:
+      - master
+
 - name: docker
   image: plugins/docker
   settings:
     username: justmiles
-    password: 
+    password:
       from_secret: docker_password
     repo: justmiles/dev-sandbox
-    tags: latest
+    tags:
+      - latest
+      - ${DRONE_TAG=latest}
     squash: true
     auto_tag: true
     cache_from:
       - "justmiles/dev-sandbox:latest"
-
-- name: semantic-release
-  image: hoppr/semantic-release:latest
-  environment:
-    GH_TOKEN: 
-      from_secret: github_token
-  commands:
-  - semantic-release
+  when:
+    event:
+      - push
+      - tag
