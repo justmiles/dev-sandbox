@@ -4,7 +4,7 @@ name: default
 
 steps:
   - name: Release
-    image: node:20
+    image: node:22
     commands:
       - git config --global --add safe.directory /drone/src
       - npm install -g semantic-release @semantic-release/git @semantic-release/commit-analyzer
