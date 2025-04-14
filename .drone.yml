@@ -3,33 +3,38 @@ type: docker
 name: default
 
 steps:
-- name: semantic-release
-  image: node:16
-  commands:
-    - npm install -g semantic-release @semantic-release/git @semantic-release/changelog
-    - semantic-release
-  environment:
-    GITHUB_TOKEN:
-      from_secret: github_token
-  when:
-    branch:
-      - master
+  - name: Release
+    image: node:20
+    commands:
+      - git config --global --add safe.directory /drone/src
+      - npm install -g semantic-release @semantic-release/git @semantic-release/commit-analyzer
+      - npx semantic-release --repository-url "https://github.com/justmiles/dev-sandbox.git" -b master --ci=false --plugins "@semantic-release/github"
+    environment:
+      GIT_AUTHOR_NAME: "CI"
+      GIT_AUTHOR_EMAIL: "ci@justmiles.io"
+      GIT_COMMITTER_NAME: "CI"
+      GIT_COMMITTER_EMAIL: "ci@justmiles.io"
+      GITHUB_TOKEN:
+        from_secret: github_token
+    when:
+      branch:
+        - master
 
-- name: docker
-  image: plugins/docker
-  settings:
-    username: justmiles
-    password:
-      from_secret: docker_password
-    repo: justmiles/dev-sandbox
-    tags:
-      - latest
-      - ${DRONE_TAG=latest}
-    squash: true
-    auto_tag: true
-    cache_from:
-      - "justmiles/dev-sandbox:latest"
-  when:
-    event:
-      - push
-      - tag
+  - name: docker
+    image: plugins/docker
+    settings:
+      username: justmiles
+      password:
+        from_secret: docker_password
+      repo: justmiles/dev-sandbox
+      tags:
+        - latest
+        - ${DRONE_TAG=latest}
+      squash: true
+      auto_tag: true
+      cache_from:
+        - "justmiles/dev-sandbox:latest"
+    when:
+      event:
+        - push
+        - tag
