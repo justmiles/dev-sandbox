@@ -70,7 +70,6 @@ nix-channel --update
 nix-env -u '*'
 ```
 
-
 Build this ship with podman:
 
 uidmap

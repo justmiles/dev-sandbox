@@ -167,6 +167,7 @@ RUN export PATH=$HOME/.nix-profile/bin:$PATH \
   nixpkgs.gron \
   nixpkgs.hclfmt \
   nixpkgs.jq \
+  nixpkgs.nixos-rebuild \
   nixpkgs.nomad \
   nixpkgs.oh-my-zsh \
   nixpkgs.ollama \
@@ -202,7 +203,7 @@ RUN export PATH=$HOME/.nix-profile/bin:$PATH \
 # Copy user dotfiles
 COPY --chown=sandbox:sandbox dotfiles /home/sandbox
 
-RUN $HOME/.nix-profile/bin/chezmoi --exclude scripts --source ~/.config/chezmoi-public --cache ~/.cache/chezmoi-public --refresh-externals init --apply https://github.com/justmiles/dotfiles.git
+RUN ~/.nix-profile/bin/chezmoi --exclude scripts --source ~/.config/chezmoi-public --cache ~/.cache/chezmoi-public --refresh-externals init --apply https://github.com/justmiles/dotfiles.git
 
 # Install VS Code Extensions
 RUN for item in \
@@ -225,6 +226,7 @@ RUN for item in \
       # Generic tools
       johnpapa.vscode-peacock \
       jebbs.plantuml \
+      jnoortheen.nix-ide \
       # Install snazzy themes
       pkief.material-icon-theme \
       zhuangtongfa.Material-theme \
@@ -244,8 +246,8 @@ USER root
 COPY s6-rc.d /etc/s6-overlay/s6-rc.d
 
 # Set default environment variables
-ENV S6_VERBOSITY 0
-ENV S6_CMD_WAIT_FOR_SERVICES_MAXTIME 0
+ENV S6_VERBOSITY=0
+ENV S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0
 ENV PATH=$PATH:$HOME/bin
 ENTRYPOINT ["/init"]
 
