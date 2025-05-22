@@ -227,6 +227,7 @@ RUN for item in \
       johnpapa.vscode-peacock \
       jebbs.plantuml \
       jnoortheen.nix-ide \
+      arrterian.nix-env-selector \
       # Install snazzy themes
       pkief.material-icon-theme \
       zhuangtongfa.Material-theme \
