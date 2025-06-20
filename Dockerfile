@@ -235,7 +235,7 @@ RUN for item in \
       mtxr.sqltools-driver-pg \
     ; do /usr/local/code-server/bin/code-server --force --install-extension $item; done
 
-RUN mkdir -p ~/.ssh ~/.hishtory && hishtory completion zsh > ~/.hishtory/config.zsh
+RUN mkdir -p ~/.ssh ~/.hishtory
 
 EXPOSE 8080
 
