@@ -32,12 +32,13 @@ docker run --privileged \
 
 Consider mapping the following volumes for a generally better experience.
 
-| Name                     | Description                     |
-| ------------------------ | ------------------------------- |
-| /home/sandbox/.ssh       | pass in your SSH credentials    |
-| /home/sandbox/workspaces | working directory for IDE       |
-| /var/run/docker.sock     | access to the docker daemon     |
-| /dev/net/tun             | TUN/TAP for Tailscale & OpenVPN |
+| Name                     | Description                                                             |
+| ------------------------ | ----------------------------------------------------------------------- |
+| /home/sandbox/.ssh       | pass in your SSH credentials                                            |
+| /home/sandbox/workspaces | working directory for IDE                                               |
+| /var/run/docker.sock     | access to the docker daemon                                             |
+| /dev/net/tun             | TUN/TAP for Tailscale & OpenVPN                                         |
+| /home/sandbox/.hishtory  | Persist [hiSHtory](https://github.com/ddworken/hishtory) db and config  |
 
 ## Environment Variables
 
