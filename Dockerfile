@@ -119,6 +119,11 @@ RUN mkdir -p /usr/local/code-server \
 
 # Install https://github.com/ddworken/hishtory
 RUN curl -sfLo /usr/local/bin/hishtory https://github.com/ddworken/hishtory/releases/download/v${GITHUB_RELEASE_DDWORKEN__HISHTORY}/hishtory-linux-amd64 && chmod +x /usr/local/bin/hishtory
+# Install hishtory hooks
+RUN curl -sfLo - https://github.com/ddworken/hishtory/archive/refs/tags/v${GITHUB_RELEASE_DDWORKEN__HISHTORY}.tar.gz | tar -xzf - hishtory-${GITHUB_RELEASE_DDWORKEN__HISHTORY}/client/lib/config.zsh \
+  && mkdir -p /hishtory-hooks \
+  && mv hishtory-${GITHUB_RELEASE_DDWORKEN__HISHTORY}/client/lib/config.zsh /hishtory-hooks/
+
 
 # Install https://github.com/sigoden/aichat
 RUN curl -sfLo - https://github.com/sigoden/aichat/releases/download/v${GITHUB_RELEASE_SIGODEN__AICHAT}/aichat-v${GITHUB_RELEASE_SIGODEN__AICHAT}-x86_64-unknown-linux-musl.tar.gz | tar -xzf - -C /usr/local/bin aichat
