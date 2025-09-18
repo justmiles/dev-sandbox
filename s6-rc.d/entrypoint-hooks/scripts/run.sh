@@ -12,7 +12,7 @@ export HOME=/home/sandbox
 find $ENTRYPOINT_HOOKS -type f -executable | while read f; do
   echo "ENTRYPOINT_HOOKS: $f: running"
 
-  HOME=/home/sandbox exec s6-setuidgid sandbox $f
+  HOME=/home/sandbox s6-setuidgid sandbox $f
   
   if [ "$?" -gt "0" ]; then
     echo "ENTRYPOINT_HOOKS: $f: failed" && exit "$?"
