@@ -31,7 +31,3 @@ done
 
 # Hook direnv
 eval "$(direnv hook zsh)"
-
-# Hishtory Config:
-export PATH="$PATH:/home/sandbox/.hishtory"
-source /home/sandbox/.hishtory/config.zsh
