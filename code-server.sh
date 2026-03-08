@@ -1,12 +1,12 @@
-#!/command/with-contenv sh
+#!/command/with-contenv bash
 
-set -e
+set -euo pipefail
 
 exec 2>&1
 
-CODE_SERVER_ARGS="$CODE_SERVER_ARGS"
+CODE_SERVER_ARGS="${CODE_SERVER_ARGS:-}"
 
-if [ ! -z "${TS_DOMAIN_ALIAS}" ] && [ "${TS_SSL_ENABLED}" = "true" ]  ; then
+if [ -n "${TS_DOMAIN_ALIAS:-}" ] && [ "${TS_SSL_ENABLED:-}" = "true" ]  ; then
 
   while ! tailscale ip -4; do
       echo "waiting for tailscale"
@@ -29,5 +29,17 @@ fi
 
 export HOME=/home/sandbox
 export PATH=$HOME/.nix-profile/bin:$PATH
+
+# Support additional custom groups
+CUSTOMGROUPS="${SANDBOX_GIDS:-}" ; CUSTOMGROUPS="${CUSTOMGROUPS//,/ }"
+
+for gid in $CUSTOMGROUPS; do
+  # Create group if it does not exist yet
+  if ! getent group "${gid}" >/dev/null 2>&1; then
+    groupadd -g "${gid}" "sandbox-${gid}"
+  fi
+
+  usermod -a -G "${gid}" sandbox
+done
 
 exec s6-setuidgid sandbox /usr/local/code-server/bin/code-server $CODE_SERVER_ARGS
