@@ -48,12 +48,9 @@ RUN export PATH=/home/sandbox/.nix-profile/bin:$PATH \
   nixpkgs.openssh \
   nixpkgs.procps \
   nixpkgs.tree \
-  nixpkgs.man-db \
-  nixpkgs.awscli2 \
   nixpkgs.chezmoi \
   nixpkgs.direnv \
   nixpkgs.docker-compose \
-  nixpkgs.gh \
   nixpkgs.jq \
   nixpkgs.oh-my-zsh \
   nixpkgs.rclone \
@@ -103,21 +100,6 @@ RUN mkdir -p /usr/local/code-server \
   && curl -sfLo - https://github.com/coder/code-server/releases/download/v${GITHUB_RELEASE_CODER__CODE_SERVER}/code-server-${GITHUB_RELEASE_CODER__CODE_SERVER}-linux-amd64.tar.gz | tar -xzf - -C /usr/local/code-server --strip-components=1
 
 USER sandbox
-
-# Install VS Code Extensions
-RUN for item in \
-      # Generic language parsers / prettifiers
-      esbenp.prettier-vscode \
-      redhat.vscode-yaml \
-      jkillian.custom-local-formatters \
-      # Generic tools
-      johnpapa.vscode-peacock \
-      jnoortheen.nix-ide \
-      arrterian.nix-env-selector \
-      # Install snazzy themes
-      pkief.material-icon-theme \
-      zhuangtongfa.Material-theme \
-    ; do /usr/local/code-server/bin/code-server --force --install-extension $item; done
 
 USER root
 

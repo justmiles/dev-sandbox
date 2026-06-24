@@ -1,3 +1,4 @@
+# runs at boot; run with `nix-env -i -f ~/package.nix`
 with import <nixpkgs> {};
 buildEnv {
   name = "user-packages";
