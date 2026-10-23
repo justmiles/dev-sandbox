@@ -4,7 +4,7 @@ build:
     docker build . -t {{image}}
 
 push: build
-    docker push justmiles/dev-sandbox
+    docker push {{image}}
 
 run:
     docker run --rm -d --name dev-sandbox -v $PWD:/home/sandbox/workspaces -p 8080:8080 {{image}}

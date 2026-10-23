@@ -18,6 +18,7 @@ RUN apt-get update \
     curl wget \
     make \
     sudo \
+    openssh-client \
     rsync \
   && apt-get clean autoclean \
   && apt-get autoremove --yes \
@@ -41,11 +42,11 @@ RUN export PATH=/home/sandbox/.nix-profile/bin:$PATH \
   && nix-env -iA \
   nixpkgs.busybox \
   nixpkgs.git \
+  nixpkgs.gnugrep \
   nixpkgs.git-lfs \
   nixpkgs.less \
   nixpkgs.ncdu \
   nixpkgs.nettools \
-  nixpkgs.openssh \
   nixpkgs.procps \
   nixpkgs.tree \
   nixpkgs.chezmoi \
