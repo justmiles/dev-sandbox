@@ -25,7 +25,19 @@ case "$AGENT" in
     ;;
   claude)
     CLAUDE_RC_ARGS="${CLAUDE_RC_ARGS:-}"
-    exec s6-setuidgid sandbox claude rc $CLAUDE_RC_ARGS
+    s6-setuidgid sandbox claude rc $CLAUDE_RC_ARGS || {
+      echo ""
+      echo "================================================================"
+      echo "  Claude Remote Control exited. Authentication may be required."
+      echo ""
+      echo "  To authenticate, run:"
+      echo "    docker exec -it <container> s6-setuidgid sandbox claude auth login"
+      echo ""
+      echo "  Waiting 5 minutes before exiting to allow time to log in..."
+      echo "================================================================"
+      sleep 300
+      exit 1
+    }
     ;;
   *)
     echo "Unknown AGENT: $AGENT (valid: claude, opencode)"
