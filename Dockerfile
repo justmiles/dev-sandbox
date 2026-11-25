@@ -61,6 +61,7 @@ RUN export PATH=/home/sandbox/.nix-profile/bin:$PATH \
   nixpkgs.rclone \
   nixpkgs.unzip \
   nixpkgs.unixtools.ping \
+  nixpkgs.claude-code \
   nixpkgs.watchexec \
   nixpkgs.wget \
   nixpkgs.yq \
@@ -100,8 +101,9 @@ USER root
 # Copy s6-overlay configs
 COPY s6-rc.d /etc/s6-overlay/s6-rc.d
 
-# Copy opencode launcher
+# Copy agent launchers
 COPY opencode.sh /usr/local/bin/opencode.sh
+COPY start.sh /usr/local/bin/start.sh
 
 # Set default environment variables
 ENV S6_VERBOSITY=0
@@ -114,4 +116,4 @@ RUN mkdir -p /home_skel && cp -a /home/sandbox/. /home_skel/ && chown -R sandbox
 EXPOSE 8080
 WORKDIR /home/sandbox
 ENTRYPOINT ["/init"]
-CMD ["/usr/local/bin/opencode.sh"]
+CMD ["/usr/local/bin/start.sh"]
