@@ -40,8 +40,11 @@ case "$AGENT" in
       exit 1
     }
     ;;
+  itsaplan)
+    exec s6-setuidgid sandbox npx -y @itsaplan/runner agent
+    ;;
   *)
-    echo "Unknown AGENT: $AGENT (valid: claude, opencode)"
+    echo "Unknown AGENT: $AGENT (valid: claude, itsaplan, opencode)"
     exit 1
     ;;
 esac
