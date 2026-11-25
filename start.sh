@@ -25,6 +25,7 @@ case "$AGENT" in
     ;;
   claude)
     CLAUDE_RC_ARGS="${CLAUDE_RC_ARGS:-}"
+    cd /home/sandbox/workspace
     s6-setuidgid sandbox claude rc $CLAUDE_RC_ARGS || {
       echo ""
       echo "================================================================"
