@@ -38,7 +38,7 @@ RUN sh /tmp/nix-install --no-daemon
 
 WORKDIR /home/sandbox
 
-RUN export PATH=/home/sandbox/.nix-profile/bin:$PATH \
+RUN export PATH=/home/sandbox/.nix-profile/bin:$PATH NIXPKGS_ALLOW_UNFREE=1 \
   && nix-env -iA \
   nixpkgs.busybox \
   nixpkgs.devbox \
