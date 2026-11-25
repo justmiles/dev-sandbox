@@ -4,7 +4,7 @@ FROM ubuntu:jammy
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Setup sandbox user
-RUN useradd --shell /home/sandbox/.nix-profile/bin/zsh --create-home sandbox
+RUN useradd --shell /bin/bash --create-home sandbox
 
 # Install System Packages
 RUN apt-get update \
@@ -41,35 +41,34 @@ WORKDIR /home/sandbox
 RUN export PATH=/home/sandbox/.nix-profile/bin:$PATH \
   && nix-env -iA \
   nixpkgs.busybox \
+  nixpkgs.devbox \
+  nixpkgs.awscli2 \
+  nixpkgs.gh \
+  nixpkgs.nodejs \
+  nixpkgs.go \
+  nixpkgs.gopls \
   nixpkgs.git \
   nixpkgs.gnugrep \
   nixpkgs.git-lfs \
   nixpkgs.less \
-  nixpkgs.ncdu \
   nixpkgs.nettools \
   nixpkgs.procps \
   nixpkgs.tree \
-  nixpkgs.chezmoi \
+  nixpkgs.util-linux \
   nixpkgs.direnv \
   nixpkgs.docker-compose \
   nixpkgs.jq \
-  nixpkgs.oh-my-zsh \
   nixpkgs.rclone \
-  nixpkgs.tldr \
   nixpkgs.unzip \
   nixpkgs.unixtools.ping \
-  nixpkgs.vim \
   nixpkgs.watchexec \
   nixpkgs.wget \
   nixpkgs.yq \
-  nixpkgs.zsh \
  && nix-env --delete-generations old \
  && nix-store --gc
 
 # Copy user dotfiles
 COPY --chown=sandbox:sandbox dotfiles /home/sandbox
-
-RUN ~/.nix-profile/bin/chezmoi --exclude scripts --source ~/.config/chezmoi-public --cache ~/.cache/chezmoi-public --refresh-externals init --depth 1 --apply https://github.com/justmiles/dotfiles.git
 
 RUN mkdir -p ~/.ssh
 
@@ -84,21 +83,15 @@ RUN sed -i "s/# en_US.UTF-8/en_US.UTF-8/" /etc/locale.gen \
   && locale-gen
 
 # Pinned Versions - GitHub Releases
-ENV GITHUB_RELEASE_CODER__CODE_SERVER=4.106.3
+ENV GITHUB_RELEASE_SST__OPENCODE=1.19.4
 ENV GITHUB_RELEASE_JUST_CONTAINERS__S6_OVERLAY=3.2.1.0
+
 # Install s6-overlay
 RUN curl -sfLo - https://github.com/just-containers/s6-overlay/releases/download/v${GITHUB_RELEASE_JUST_CONTAINERS__S6_OVERLAY}/s6-overlay-noarch.tar.xz | tar -Jxpf - -C /
 RUN curl -sfLo - https://github.com/just-containers/s6-overlay/releases/download/v${GITHUB_RELEASE_JUST_CONTAINERS__S6_OVERLAY}/s6-overlay-x86_64.tar.xz | tar -Jxpf - -C /
 
-# Install tailscale
-RUN curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/focal.gpg | apt-key add - \
-  && curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/focal.list | tee /etc/apt/sources.list.d/tailscale.list \
-  && apt-get update \
-  && apt-get install -y tailscale
-
-# Install https://github.com/coder/code-server
-RUN mkdir -p /usr/local/code-server \
-  && curl -sfLo - https://github.com/coder/code-server/releases/download/v${GITHUB_RELEASE_CODER__CODE_SERVER}/code-server-${GITHUB_RELEASE_CODER__CODE_SERVER}-linux-amd64.tar.gz | tar -xzf - -C /usr/local/code-server --strip-components=1
+# Install https://github.com/sst/opencode
+RUN curl -sfLo - https://github.com/sst/opencode/releases/download/v${GITHUB_RELEASE_SST__OPENCODE}/opencode-linux-x64.tar.gz | tar -xzf - -C /usr/local/bin
 
 USER sandbox
 
@@ -107,11 +100,8 @@ USER root
 # Copy s6-overlay configs
 COPY s6-rc.d /etc/s6-overlay/s6-rc.d
 
-# Copy code-server
-COPY code-server.sh /usr/local/bin/code-server.sh
-
-# Copy app icons
-COPY media /usr/local/code-server/src/browser/media
+# Copy opencode launcher
+COPY opencode.sh /usr/local/bin/opencode.sh
 
 # Set default environment variables
 ENV S6_VERBOSITY=0
@@ -124,4 +114,4 @@ RUN mkdir -p /home_skel && cp -a /home/sandbox/. /home_skel/ && chown -R sandbox
 EXPOSE 8080
 WORKDIR /home/sandbox
 ENTRYPOINT ["/init"]
-CMD ["/usr/local/bin/code-server.sh"]
+CMD ["/usr/local/bin/opencode.sh"]

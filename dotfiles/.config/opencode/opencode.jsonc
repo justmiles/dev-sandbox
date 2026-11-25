@@ -1,0 +1,54 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "agentgateway": {
+      "name": "Agent Gateway",
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        // Resolved by OpenCode at startup from the container environment.
+        "baseURL": "{env:AGENTGATEWAY_BASE_URL}",
+        "apiKey": "{env:AGENTGATEWAY_API_KEY}"
+      },
+      "models": {
+        // NOTE: the model id is an object *key*. Env substitution is reliable
+        // in string values, not keys - if the model identifier itself must
+        // change per deployment, that is the one case needing a render step.
+        "cli-proxy-api/claude-sonnet-5": {
+          "name": "{env:AGENTGATEWAY_MODEL_NAME}"
+        }
+      }
+    }
+  },
+  "mcp": {
+    "playwright": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "@playwright/mcp@latest",
+        "--headless",
+        "--no-sandbox"
+      ],
+      "enabled": true
+    },
+    "context7": {
+      "type": "remote",
+      "url": "https://mcp.context7.com/mcp",
+      "enabled": true
+    },
+    "sequential-thinking": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-sequential-thinking"
+      ],
+      "enabled": true
+    },
+    "linear": {
+      "type": "remote",
+      "url": "https://mcp.linear.app/mcp",
+      "enabled": true
+    }
+  }
+}
