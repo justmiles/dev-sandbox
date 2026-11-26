@@ -1,0 +1,29 @@
+#!/command/with-contenv bash
+
+exec 2>&1
+
+TS_STATE_DIR="/home/sandbox/.config/tailscale"
+TS_SOCKET="/tmp/tailscaled.sock"
+
+mkdir -p "$TS_STATE_DIR"
+
+tailscaled \
+  --state="$TS_STATE_DIR/tailscaled.state" \
+  --socket="$TS_SOCKET" \
+  --statedir="$TS_STATE_DIR" &
+DAEMON_PID=$!
+
+# Wait for socket to be ready (up to 30s)
+for i in $(seq 30); do
+  tailscale --socket="$TS_SOCKET" status >/dev/null 2>&1 && break
+  sleep 1
+done
+
+# Authenticate if auth key is provided; otherwise rely on existing state
+if [ -n "${TS_AUTHKEY:-}" ]; then
+  tailscale --socket="$TS_SOCKET" up --authkey="$TS_AUTHKEY" --accept-routes
+else
+  tailscale --socket="$TS_SOCKET" up --accept-routes 2>/dev/null || true
+fi
+
+wait $DAEMON_PID

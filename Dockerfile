@@ -62,6 +62,7 @@ RUN export PATH=/home/sandbox/.nix-profile/bin:$PATH NIXPKGS_ALLOW_UNFREE=1 \
   nixpkgs.unzip \
   nixpkgs.unixtools.ping \
   nixpkgs.claude-code \
+  nixpkgs.tailscale \
   nixpkgs.watchexec \
   nixpkgs.wget \
   nixpkgs.yq \
